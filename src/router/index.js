@@ -11,12 +11,36 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
+    path: '/scheduled',
+    name: 'scheduled',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import(/* webpackChunkName: "scheduled" */ '../views/ScheduledView.vue')
+  },
+  {
+    path: '/completed',
+    name: 'completed',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "completed" */ '../views/CompletedView.vue')
+  },
+  {
+    path: '/knowledge_base',
+    name: 'knowledge_base',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "knowledge_base" */ '../views/KnowledgeBaseView.vue')
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "settings" */ '../views/SettingsView.vue')
   }
 ]
 
