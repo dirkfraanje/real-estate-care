@@ -1,20 +1,23 @@
 <template>
   <v-app
     ><div>
-      <NavbarView />
+      <TopNavigation />
     </div>
     <v-main>
       <router-view />
     </v-main>
+    <BottomNavigation/>
   </v-app>
 </template>
 
 <script>
-import NavbarView from "@/components/NavbarView.vue";
+import TopNavigation from "@/components/TopNavigation.vue";
+import BottomNavigation from "@/components/BottomNavigation"
 export default {
   name: "App",
   components: {
-    NavbarView,
+    TopNavigation,
+    BottomNavigation,
   },
   data: () => ({
     //
