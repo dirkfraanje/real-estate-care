@@ -16,11 +16,11 @@
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
-    <v-btn fab small depressed>
-      <v-icon right>notifications_none</v-icon>
+    <v-btn icon>
+      <v-icon>notifications_none</v-icon>
     </v-btn>
-    <v-btn fab small depressed>
-      <v-icon right>settings</v-icon>
+    <v-btn icon>
+      <v-icon>settings</v-icon>
     </v-btn>
   </v-app-bar>
 </template>
