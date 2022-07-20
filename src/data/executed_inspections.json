@@ -1,0 +1,140 @@
+{
+	"inspections": [
+		{
+			"inspection": {
+				"client_id": "cl_1",
+				"location": {
+					"street": "Anjelierstraat",
+					"number": 38,
+					"number_addition": "",
+					"city": "Barneveld",
+					"zip_code": "3772XN",
+					"deadline_date": "2022-22-05T12:00:00+01:00",
+					"execution_date": "2022-21-05T12:00:00+01:00"
+				}
+			},
+			"damages": [
+				{
+					"location": "Kitchen",
+					"new_damage": true,
+					"type_of_damage": "violence",
+					"date": "2021-11-03",
+					"acute_action_required": false,
+					"description": "Kitchen door handle is broken",
+					"photo": ""
+				},
+				{
+					"location": "Kitchen",
+					"new_damage": true,
+					"type_of_damage": "violence",
+					"date": "2021-11-03",
+					"acute_action_required": false,
+					"description": "Drawer handle has completely disappeared",
+					"photo": ""
+				}
+			],
+			"deferred_maintenance": [],
+			"technical_installations": [],
+			"modifications": {
+				"already_documented_modifications": [
+					{
+						"location": "Roof",
+						"performed_by": "contractor",
+						"description": "Solar panels + inverter installed",
+						"action_to_take": "have_it_inspected",
+						"remarks": "Inform new residents that the inverter is an old model.",
+						"photo": ""
+					}
+				],
+				"newly_inventoried_modifications_during_inspection": [
+					{
+						"location": "Roof / upper floor",
+						"performed_by": "contractor",
+						"description": "Air conditioning upstairs",
+						"action_to_take": "have_it_inspected",
+						"remarks": "",
+						"photo": ""
+					}
+				]
+			}
+		},
+		{
+			"inspection": {
+				"client_id": "cl_1",
+				"location": {
+					"street": "Violenstraat",
+					"number": 11,
+					"number_addition": "",
+					"city": "Barneveld",
+					"zip_code": "3772GL",
+					"deadline_date": "2022-25-05T12:00:00+01:00",
+					"execution_date": "2022-23-05T12:00:00+01:00"
+				}
+			},
+			"damages": [],
+			"deferred_maintenance": [
+				{
+					"location": "Scullery",
+					"type_of_maintenance": "plumbing",
+					"acute_action_required": true,
+					"cost_indication": 150,
+					"description": "Boiler check",
+					"photo": ""
+				}
+			],
+			"technical_installations": [],
+			"modifications": {
+				"already_documented_modifications": [],
+				"newly_inventoried_modifications_during_inspection": []
+			}
+		},
+		{
+			"inspection": {
+				"client_id": "cl_2",
+				"location": {
+					"street": "Constantijn Huygensstraat",
+					"number": 24,
+					"number_addition": "",
+					"city": "Barneveld",
+					"zip_code": "3771ZP",
+					"deadline_date": "2022-2-06T12:00:00+01:00",
+					"execution_date": "2022-1-06T12:00:00+01:00"
+				}
+			},
+			"damages": [
+				{
+					"location": "Outside",
+					"new_damage": true,
+					"type_of_damage": "normal_use",
+					"date": "2001-3-2T13:30:00:00+01:00",
+					"acute_action_required": false,
+					"description": "Wall of the garage is torn at the top due to places of hanging roof",
+					"photo": ""
+				}
+			],
+			"deferred_maintenance": [
+				{
+					"location": "Outside",
+					"type_of_maintenance": "painting",
+					"acute_action_required": true,
+					"cost_indication": 2500,
+					"description": "All painting is seriously behind",
+					"photo": ""
+				},
+				{
+					"location": "Outside",
+					"type_of_maintenance": "wood_rot",
+					"acute_action_required": true,
+					"cost_indication": 2500,
+					"description": "Windows below / behind are rotten and need to be replaced",
+					"photo": ""
+				}
+			],
+			"technical_installations": [],
+			"modifications": {
+				"already_documented_modifications": [],
+				"newly_inventoried_modifications_during_inspection": []
+			}
+		}
+	]
+}

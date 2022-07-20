@@ -16,7 +16,7 @@
 			"damages": [
 				{
 					"location": "",
-					"new_damage": "",
+					"new_damage": true,
 					"type_of_damage": "",
 					"date": "",
 					"acute_action_required": false,
@@ -30,6 +30,7 @@
 					"type_of_maintenance": "",
 					"acute_action_required": false,
 					"cost_indication": 0,
+					"description": "",
 					"photo": ""
 				}
 			],
@@ -45,7 +46,7 @@
 				}
 			],
 			"modifications": {
-				"documented_modifications": [
+				"already_documented_modifications": [
 					{
 						"location": "",
 						"performed_by": "",
@@ -55,7 +56,7 @@
 						"photo": ""
 					}
 				],
-				"newly_inventoried_modifications": [
+				"newly_inventoried_modifications_during_inspection": [
 					{
 						"location": "",
 						"performed_by": "",
