@@ -3,6 +3,7 @@
 		{
 			"inspection": {
 				"client_id": "cl_1",
+				"icon": "home",
 				"location": {
 					"street": "Anjelierstraat",
 					"number": 38,
@@ -61,6 +62,7 @@
 		{
 			"inspection": {
 				"client_id": "cl_1",
+				"icon": "home",
 				"location": {
 					"street": "Violenstraat",
 					"number": 11,
@@ -91,6 +93,7 @@
 		{
 			"inspection": {
 				"client_id": "cl_2",
+				"icon": "view_quilt",
 				"location": {
 					"street": "Constantijn Huygensstraat",
 					"number": 24,

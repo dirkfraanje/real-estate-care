@@ -2,6 +2,7 @@
 	"inspections": [
 		{
 			"inspection": {
+				"id": 0,
 				"client_id": "",
 				"location": {
 					"street": "",
