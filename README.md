@@ -12,7 +12,7 @@ npm run serve
 
 ### Compiles and minifies for production
 ```
-json-server --watch data/{executed_inspections.json | assigned_inspections.json}
+json-server --watch data/executed_inspections.json
 npm run build
 ```
 
