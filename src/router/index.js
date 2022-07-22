@@ -19,12 +19,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "scheduled" */ '../views/ScheduledView.vue')
   },
   {
-    path: '/completed',
+    path: '/inspections/completed',
     name: 'completed',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "completed" */ '../views/CompletedView.vue')
+    component: () => import(/* webpackChunkName: "completed" */ '../views/inspections/CompletedView.vue')
   },
   {
     path: '/knowledge_base',
@@ -41,6 +41,15 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "settings" */ '../views/SettingsView.vue')
+  },
+  {
+    path: '/inspections/:id',
+    name: 'InspectionEdit',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "completed" */ '../views/inspections/InspectionEdit.vue'),
+    props: true
   }
 ]
 

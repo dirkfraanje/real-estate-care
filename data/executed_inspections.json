@@ -2,16 +2,17 @@
 	"inspections": [
 		{
 			"inspection": {
+				"id": 1,
 				"client_id": "cl_1",
 				"icon": "home",
+				"deadline_date": "2022-22-05",
+				"execution_date": "2022-21-05",
 				"location": {
 					"street": "Anjelierstraat",
 					"number": 38,
 					"number_addition": "",
 					"city": "Barneveld",
-					"zip_code": "3772XN",
-					"deadline_date": "2022-22-05T12:00:00+01:00",
-					"execution_date": "2022-21-05T12:00:00+01:00"
+					"zip_code": "3772XN"
 				}
 			},
 			"damages": [
@@ -61,16 +62,17 @@
 		},
 		{
 			"inspection": {
+				"id": 2,
 				"client_id": "cl_1",
 				"icon": "home",
+				"deadline_date": "2022-25-05",
+				"execution_date": "2022-23-05",
 				"location": {
 					"street": "Violenstraat",
 					"number": 11,
 					"number_addition": "",
 					"city": "Barneveld",
-					"zip_code": "3772GL",
-					"deadline_date": "2022-25-05T12:00:00+01:00",
-					"execution_date": "2022-23-05T12:00:00+01:00"
+					"zip_code": "3772GL"
 				}
 			},
 			"damages": [],
@@ -84,7 +86,16 @@
 					"photo": ""
 				}
 			],
-			"technical_installations": [],
+			"technical_installations": [
+				{
+					"location": "Whole house",
+					"installation_type": "security",
+					"reported_malfunctions": "Not able to set alarm with security code",
+					"test_procedure": "https://livewell.honeywellhome.com/honeywell_wp/wp-content/uploads/Keypad_Alarm_Kit_User_Guide.pdf",
+					"approved": false,
+					"remarks": "Alarm needs to be approved by "
+				}
+			],
 			"modifications": {
 				"already_documented_modifications": [],
 				"newly_inventoried_modifications_during_inspection": []
@@ -92,16 +103,17 @@
 		},
 		{
 			"inspection": {
+				"id": 3,
 				"client_id": "cl_2",
-				"icon": "view_quilt",
+				"icon": "apartment",
+				"deadline_date": "21-7-2022",
+				"execution_date": "18-7-2022",
 				"location": {
-					"street": "Constantijn Huygensstraat",
-					"number": 24,
+					"street": "Oldenbarnevelderweg",
+					"number": 27,
 					"number_addition": "",
 					"city": "Barneveld",
-					"zip_code": "3771ZP",
-					"deadline_date": "2022-2-06T12:00:00+01:00",
-					"execution_date": "2022-1-06T12:00:00+01:00"
+					"zip_code": "3771ZP"
 				}
 			},
 			"damages": [

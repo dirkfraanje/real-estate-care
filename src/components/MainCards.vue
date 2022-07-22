@@ -24,7 +24,7 @@ export default {
   data: () => ({
     cards: [
       { title: "Scheduled", icon: "schedule_send", flex: 6, route: 'scheduled' },
-      { title: "Completed", icon: "done_all", flex: 6, route: 'completed' },
+      { title: "Executed", icon: "done_all", flex: 6, route: '/inspections/completed' },
       { title: "Knowledge base", icon: "view_list", flex: 6, route: 'knowledge_base' },
       { title: "Settings", icon: "settings", flex: 6, route: 'settings' },
     ],

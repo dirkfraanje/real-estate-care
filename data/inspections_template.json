@@ -3,6 +3,7 @@
 		{
 			"inspection": {
 				"id": 0,
+				"icon": "view_quilt",
 				"client_id": "",
 				"location": {
 					"street": "",
