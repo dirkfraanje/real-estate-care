@@ -1,0 +1,83 @@
+{
+	"inspections": [
+		{
+			"inspection": {
+				"id": 0,
+				"icon": "view_quilt",
+				"client_id": "",
+				"executed": false,
+				"location": {
+					"street": "",
+					"number": 0,
+					"number_addition": "",
+					"city": "",
+					"zip_code": "",
+					"deadline_date": "",
+					"execution_date": ""
+				}
+			},
+			"damages": [
+				{
+					"location": "",
+					"new_damage": true,
+					"type_of_damage": "",
+					"date": "",
+					"acute_action_required": false,
+					"description": "",
+					"photo": ""
+				}
+			],
+			"deferred_maintenance": [
+				{
+					"location": "",
+					"type_of_maintenance": "",
+					"acute_action_required": false,
+					"cost_indication": 0,
+					"description": "",
+					"photo": ""
+				}
+			],
+			"technical_installations": [
+				{
+					"location": "",
+					"type_of_installation": "",
+					"reported_failures": "",
+					"test_procedure": "",
+					"approved": "",
+					"remarks": "",
+					"photo": ""
+				}
+			],
+			"modifications": {
+				"already_documented_modifications": [
+					{
+						"location": "",
+						"performed_by": "",
+						"description": "",
+						"action_to_take": "",
+						"remarks": "",
+						"photo": ""
+					}
+				],
+				"newly_inventoried_modifications_during_inspection": [
+					{
+						"location": "",
+						"performed_by": "",
+						"description": "",
+						"action_to_take": "",
+						"remarks": "",
+						"photo": ""
+					},
+					{
+						"location": "",
+						"performed_by": "",
+						"description": "",
+						"action_to_take": "",
+						"remarks": "",
+						"photo": ""
+					}
+				]
+			}
+		}
+	]
+}
