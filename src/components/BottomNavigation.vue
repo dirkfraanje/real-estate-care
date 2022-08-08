@@ -8,7 +8,7 @@
 
     <v-btn @click="noActionDefinedMessage('Search')">
       <span>Search knowledge base</span>
-      <v-icon>antenna</v-icon>
+      <v-icon>manage_search</v-icon>
     </v-btn>
   </v-bottom-navigation>
 </template>

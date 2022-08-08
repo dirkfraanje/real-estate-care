@@ -23,7 +23,7 @@ export default {
   data: () => ({
     //
   }),
-  mounted() {
+  created() {
     DataService.methods.fetchExecutedInspections();
     DataService.methods.fetchAssignedInspections();
   },

@@ -11,7 +11,7 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/inspections/assigned',
+    path: '/Inspections/assigned',
     name: 'assigned',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -19,7 +19,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "assigned" */ '../views/Inspections/AssignedView.vue')
   },
   {
-    path: '/inspections/completed',
+    path: '/Inspections/completed',
     name: 'completed',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
