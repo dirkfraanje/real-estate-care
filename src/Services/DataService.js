@@ -6,7 +6,7 @@ const InspectionStore = {
     methods: {
         fetchExecutedInspections() {
             //Fetch executed inspections
-            fetch("http://localhost:3000/executed_inspections")
+            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/executed_inspections")
                 .then((res) => res.json())
                 .then((data) => {
                     InspectionStore.data.executed_inspections = data.map(
@@ -20,7 +20,7 @@ const InspectionStore = {
         },
         fetchAssignedInspections() {
             //Fetch assigned inspections
-            fetch("http://localhost:3000/assigned_inspections")
+            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/assigned_inspections")
                 .then((res) => res.json())
                 .then((data) => {
                     InspectionStore.data.assigned_inspections = data.map(
@@ -95,6 +95,7 @@ class InspectionDetails {
     constructor(jsonInspectionDetails) {
         Object.assign(this, jsonInspectionDetails);
     }
+
 
     exectued() {
         this.execution_date !== null;
