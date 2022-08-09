@@ -1,19 +1,18 @@
 {
 	"inspections": [
 		{
+			"id": 0,
 			"inspection": {
-				"id": 0,
-				"icon": "view_quilt",
+				"icon": "home",
 				"client_id": "",
-				"executed": false,
+				"deadline_date": "",
+				"execution_date": "",
 				"location": {
 					"street": "",
 					"number": 0,
 					"number_addition": "",
 					"city": "",
-					"zip_code": "",
-					"deadline_date": "",
-					"execution_date": ""
+					"zip_code": ""
 				}
 			},
 			"damages": [
