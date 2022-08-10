@@ -43,6 +43,6 @@ export default {
       },
       { title: "Settings", icon: "settings", flex: 6, route: "settings" },
     ],
-  }),
+  })
 };
 </script>

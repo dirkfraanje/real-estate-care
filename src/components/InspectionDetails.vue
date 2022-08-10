@@ -5,7 +5,6 @@
         <v-list-item-icon>
           <v-icon color="teal">location_on</v-icon>
         </v-list-item-icon>
-        <img :src="`data:image/png;base64,${inspection.details.photo}`" />
         <v-list-item-content>
           <v-list-item-title>
             {{ inspection.location.street }}

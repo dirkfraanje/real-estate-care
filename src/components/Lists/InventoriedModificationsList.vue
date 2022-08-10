@@ -8,6 +8,7 @@
       >
         <v-list-item-icon>
           <v-icon color="teal">handyman</v-icon>
+          <img :src="`data:image/png;base64,${item.photo}`" />
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title v-text="item.description"></v-list-item-title>
