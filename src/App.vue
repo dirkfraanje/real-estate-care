@@ -13,7 +13,7 @@
 <script>
 import TopNavigation from "@/components/TopNavigation.vue";
 import BottomNavigation from "@/components/BottomNavigation";
-import DataService from "@/Services/DataService";
+
 export default {
   name: "App",
   components: {
@@ -24,8 +24,8 @@ export default {
     //
   }),
   created() {
-    DataService.methods.fetchExecutedInspections();
-    DataService.methods.fetchAssignedInspections();
+    this.$store.dispatch('fetchExecutedInspections');
+    this.$store.dispatch('fetchAssignedInspections');
   },
 };
 </script>

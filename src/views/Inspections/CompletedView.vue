@@ -2,7 +2,7 @@
   <div>
     <h3 class="pl-10">Executed inspections</h3>
     <div><v-expansion-panels>
-      <v-expansion-panel v-for="(inspection, i) in DataService.data.executed_inspections" :key="i">
+      <v-expansion-panel v-for="(inspection, i) in this.$store.state.executed_inspections" :key="i">
         <v-expansion-panel-header class="ml-4"
           ><div>
             <v-icon color="teal lighten-1">{{
@@ -33,7 +33,7 @@ import DeferedMaintenanceList from "@/components/Lists/DeferedMaintenanceList.vu
 import TechnicalInstallationList from "@/components/Lists/TechnicalInstallationList.vue";
 import DocumentedModificationsList from "@/components/Lists/DocumentedModificationsList.vue";
 import InventoriedModificationsList from "@/components/Lists/InventoriedModificationsList.vue";
-import DataService from "@/Services/DataService";
+
 export default {
   components: {
     InspectionDetails,
@@ -42,12 +42,6 @@ export default {
     TechnicalInstallationList,
     DocumentedModificationsList,
     InventoriedModificationsList
-  },
-
-  data() {
-    return {
-      DataService
-    };
   }
 };
 </script>
