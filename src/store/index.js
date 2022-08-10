@@ -4,14 +4,18 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         executed_inspections: [],
-        assigned_inspections: []
+        assigned_inspections: [],
+        executed_count: 0,
+        assigned_count: 0
     },
     mutations: {
         SET_EXECUTED_INSPECTIONS(state, payload) {
             state.executed_inspections = payload;
+            state.executed_count = state.executed_inspections.length;
         },
         SET_ASSIGNED_INSPECTIONS(state, payload) {
             state.assigned_inspections = payload;
+            state.assigned_count = state.assigned_inspections.length;
         }
     },
     actions: {
