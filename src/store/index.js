@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
+        isAuthenticated: false,
         executed_inspections: [],
         assigned_inspections: [],
         executed_count: 0,
@@ -16,9 +17,18 @@ export default new Vuex.Store({
         SET_ASSIGNED_INSPECTIONS(state, payload) {
             state.assigned_inspections = payload;
             state.assigned_count = state.assigned_inspections.length;
+        },
+        SET_AUTHENTICATION(state){
+            state.isAuthenticated = 
+            localStorage.getItem('username') === 'demo' &&
+            localStorage.getItem('password') === 'password'
         }
     },
     actions: {
+        authenticate(context){
+        //For this prototype only 
+        context.commit('SET_AUTHENTICATION')
+        },
         //Fetch executed inspections
         fetchExecutedInspections(context) {
             fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/executed_inspections")

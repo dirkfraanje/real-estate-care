@@ -1,12 +1,12 @@
 <template>
   <v-app
     ><div>
-      <TopNavigation />
+      <TopNavigation v-if="!isLoginView"/>
     </div>
     <v-main>
       <router-view />
     </v-main>
-    <BottomNavigation />
+    <BottomNavigation v-if="!isLoginView"/>
   </v-app>
 </template>
 
@@ -21,8 +21,13 @@ export default {
     BottomNavigation,
   },
   data: () => ({
-    //
+    
   }),
+  computed:{
+    isLoginView(){
+      return this.$route.name === 'login'
+    }
+  },
   created() {
     this.$store.dispatch('fetchExecutedInspections');
     this.$store.dispatch('fetchAssignedInspections');
