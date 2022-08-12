@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-navigation background-color="teal" dark>
+  <v-bottom-navigation class="primary">
 
     <v-btn @click="noActionDefinedMessage('Active task')">
       <span>Active task</span>

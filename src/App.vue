@@ -1,7 +1,7 @@
 <template>
-  <v-app
+  <v-app 
     ><div>
-      <TopNavigation v-if="!isLoginView"/>
+      <TopNavigation v-if="!isLoginView" />
     </div>
     <v-main>
       <router-view />
@@ -31,6 +31,7 @@ export default {
   created() {
     this.$store.dispatch('fetchExecutedInspections');
     this.$store.dispatch('fetchAssignedInspections');
+    this.$vuetify.theme.dark = localStorage.getItem('dark_mode') === 'true' ? true : false;
   },
 };
 </script>

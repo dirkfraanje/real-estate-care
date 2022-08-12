@@ -20,7 +20,7 @@
       <v-icon>notifications_none</v-icon>
     </v-btn>
     <v-btn icon>
-      <v-icon>settings</v-icon>
+      <v-icon @click="$router.push('settings')">settings</v-icon>
     </v-btn>
   </v-app-bar>
 </template>

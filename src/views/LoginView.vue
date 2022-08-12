@@ -7,7 +7,7 @@
         <v-col class="red darken-2 text-center" 
           cols="12"
           sm="12"
-        ><span class="white--text">For demo purposes use login: demo and password: password</span>
+        ><span class="white--text">For demo purposes use Username: demo and Password: password</span>
         </v-col>
         <v-col
           cols="10"
@@ -18,7 +18,6 @@
             :rules="[rules.required]"
             name="input-10-1"
             label="Username"
-            hint="At least 6 characters"
             counter
           ></v-text-field>
         </v-col>
@@ -33,7 +32,7 @@
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
             label="Password"
-            hint="At least 8 characters"
+            hint="At least 6 characters"
             counter
             @click:append="show1 = !show1"
           ></v-text-field>
@@ -47,7 +46,7 @@
     </v-btn><v-col class="mt-1 red darken-2 text-center" v-if="showWarning"
           cols="12"
           sm="12"
-        ><span class="white--text font-italic">For this prototype only the combination login: demo and password: password will work</span>
+        ><span class="white--text font-italic">For this prototype only the combination Username: demo and Password: password will work</span>
         </v-col></v-row>
     </v-container>
   </v-form>
@@ -64,8 +63,8 @@ export default {
   data: () => ({
     
         show1: false,
-        password: 'password',
-        username: 'demo',
+        password: localStorage.getItem('password'),
+        username: localStorage.getItem('username'),
         showWarning: false,
         rules: {
           required: value => !!value || 'Required.'

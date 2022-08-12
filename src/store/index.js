@@ -19,6 +19,7 @@ export default new Vuex.Store({
             state.assigned_count = state.assigned_inspections.length;
         },
         SET_AUTHENTICATION(state){
+            //For this prototype we just check for demo/password
             state.isAuthenticated = 
             localStorage.getItem('username') === 'demo' &&
             localStorage.getItem('password') === 'password'
@@ -26,7 +27,7 @@ export default new Vuex.Store({
     },
     actions: {
         authenticate(context){
-        //For this prototype only 
+        //For prototype only 
         context.commit('SET_AUTHENTICATION')
         },
         //Fetch executed inspections

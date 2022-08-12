@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h3 class="pl-10">Executed inspections</h3>
-    <div><v-expansion-panels>
+  <v-card class="mx-auto">
+    <ToolbarHeader text="Executed inspections" />
+    <v-expansion-panels>
       <v-expansion-panel v-for="(inspection, i) in this.$store.state.executed_inspections" :key="i">
         <v-expansion-panel-header class="ml-4"
           ><div>
@@ -23,8 +23,8 @@
           <InventoriedModificationsList :inspection="inspection" />
         </v-expansion-panel-content>
       </v-expansion-panel>
-    </v-expansion-panels></div>
-  </div>
+    </v-expansion-panels>
+  </v-card>
 </template>
 <script>
 import InspectionDetails from "@/components/InspectionDetails.vue";
@@ -33,7 +33,7 @@ import DeferedMaintenanceList from "@/components/Lists/DeferedMaintenanceList.vu
 import TechnicalInstallationList from "@/components/Lists/TechnicalInstallationList.vue";
 import DocumentedModificationsList from "@/components/Lists/DocumentedModificationsList.vue";
 import InventoriedModificationsList from "@/components/Lists/InventoriedModificationsList.vue";
-
+import ToolbarHeader from '@/components/ToolbarHeader.vue'
 export default {
   components: {
     InspectionDetails,
@@ -41,7 +41,8 @@ export default {
     DeferedMaintenanceList,
     TechnicalInstallationList,
     DocumentedModificationsList,
-    InventoriedModificationsList
+    InventoriedModificationsList,
+    ToolbarHeader
   }
 };
 </script>
