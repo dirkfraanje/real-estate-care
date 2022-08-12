@@ -27,14 +27,14 @@
         >
           <v-text-field
             v-model="password"
-            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required]"
-            :type="show1 ? 'text' : 'password'"
+            :type="showPassword ? 'text' : 'password'"
             name="input-10-1"
             label="Password"
             hint="At least 6 characters"
             counter
-            @click:append="show1 = !show1"
+            @click:append="showPassword = !showPassword"
           ></v-text-field>
         </v-col> 
       </v-row>
@@ -62,7 +62,7 @@ export default {
   },
   data: () => ({
     
-        show1: false,
+        showPassword: false,
         password: localStorage.getItem('password'),
         username: localStorage.getItem('username'),
         showWarning: false,

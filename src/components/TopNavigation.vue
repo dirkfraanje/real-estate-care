@@ -15,17 +15,43 @@
       </div>
     </v-toolbar-title>
 
-    <v-spacer></v-spacer>
-    <v-btn icon>
-      <v-icon>notifications_none</v-icon>
-    </v-btn>
+    <v-spacer></v-spacer
+    ><v-menu bottom offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn class="ma-2" v-bind="attrs" v-on="on" icon
+          ><v-icon>notifications_none</v-icon></v-btn
+        >
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="(notification, i) in this.notifications"
+          :key="i"
+          @click="() => {}"
+        >
+          <v-list-item-title>{{ notification.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
     <v-btn icon>
       <v-icon @click="$router.push('settings')">settings</v-icon>
     </v-btn>
   </v-app-bar>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      notifications: [
+        {
+          title: "You have new inspections assigned to you",
+        },
+        {
+          title: "Check the inspection for Anjelierstraat 38 again",
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style scoped>

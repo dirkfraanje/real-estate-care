@@ -5,22 +5,30 @@
       <v-subheader>General</v-subheader>
       <v-list-item>
         <v-list-item-content>
+          <v-list-item-title>Account</v-list-item-title>
+          <v-list-item-subtitle>Account data</v-list-item-subtitle>
+          <v-row>
+      <v-col cols="3">Login:</v-col><v-col cols="9">{{ userName }}</v-col>
+      <v-row></v-row>
+      <v-col cols="3">Region:</v-col><v-col cols="9">Gelderland</v-col>
+      <v-row></v-row>
+      <v-col cols="3">Manager:</v-col><v-col cols="9">Robert Loi</v-col>
+    </v-row>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item>
+        <v-list-item-content>
           <v-list-item-title>Profile avatar</v-list-item-title>
           <v-list-item-subtitle>Change your avatar</v-list-item-subtitle>
-         <div><v-btn
-            icon
-            x-large
-            @click="changeAvatar">
-            <v-avatar
-              color="teal"
-              size="46">
-              <span class="text-h6">D</span>
-            </v-avatar>
-          </v-btn ><v-alert v-show="showAvatarAlert"
-      dense
-      outlined
-      type="warning">Changing the avatar is not possible in this prototype
-    </v-alert></div>
+          <div>
+            <v-btn icon x-large @click="changeAvatar">
+              <v-avatar color="teal" size="46">
+                <span class="text-h6">D</span>
+              </v-avatar> </v-btn
+            ><v-alert v-show="showAvatarAlert" dense outlined type="warning"
+              >Changing the avatar is not possible in the prototype
+            </v-alert>
+          </div>
         </v-list-item-content>
       </v-list-item>
 
@@ -40,70 +48,58 @@
     <v-divider></v-divider>
 
     <v-list subheader two-line flat>
-      <v-subheader>Hangout notifications</v-subheader>
+      <v-subheader>Notifications</v-subheader>
 
       <v-list-item-group v-model="settings" multiple>
-        <v-list-item>
+        <v-list-item @click="dialog = !dialog">
           <template v-slot:default="{ active }">
             <v-list-item-action>
               <v-checkbox :input-value="active" color="primary"></v-checkbox>
             </v-list-item-action>
 
             <v-list-item-content>
-              <v-list-item-title>Notifications</v-list-item-title>
-              <v-list-item-subtitle>Allow notifications</v-list-item-subtitle>
+              <v-list-item-title>Notify</v-list-item-title>
+              <v-list-item-subtitle>Show notifications</v-list-item-subtitle>
             </v-list-item-content>
           </template>
         </v-list-item>
 
-        <v-list-item>
-          <template v-slot:default="{ active }">
-            <v-list-item-action>
+        <v-list-item @click="dialog = !dialog">
+          <template  v-slot:default="{ active }">
+            <v-list-item-action  >
               <v-checkbox :input-value="active" color="primary"></v-checkbox>
             </v-list-item-action>
 
             <v-list-item-content>
               <v-list-item-title>Sound</v-list-item-title>
-              <v-list-item-subtitle>Hangouts message</v-list-item-subtitle>
+              <v-list-item-subtitle>Play sound when a new inspection is assigned</v-list-item-subtitle>
             </v-list-item-content>
           </template>
-        </v-list-item>
-
-        <v-list-item>
-          <template v-slot:default="{ active }">
-            <v-list-item-action>
-              <v-checkbox :input-value="active" color="primary"></v-checkbox>
-            </v-list-item-action>
-
-            <v-list-item-content>
-              <v-list-item-title>Video sounds</v-list-item-title>
-              <v-list-item-subtitle>Hangouts video call</v-list-item-subtitle>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-
-        <v-list-item>
-          <template v-slot:default="{ active }">
-            <v-list-item-action>
-              <v-checkbox :input-value="active" color="primary"></v-checkbox>
-            </v-list-item-action>
-
-            <v-list-item-content>
-              <v-list-item-title>Invites</v-list-item-title>
-              <v-list-item-subtitle
-                >Notify when receiving invites</v-list-item-subtitle
-              >
-            </v-list-item-content>
-          </template>
-        </v-list-item>
+        </v-list-item>        
       </v-list-item-group>
     </v-list>
+    <v-dialog
+        v-model="dialog"
+        max-width="400px"
+      >
+        <v-card>
+          <v-card-title>
+            <span>Functionality for this setting is not available in this prototype</span>
+            <v-spacer></v-spacer>
+          </v-card-title>
+          <v-card-actions>
+            <v-btn
+              color="primary"
+              text
+              @click="dialog = false">
+              Close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
   </v-card>
 </template>
 <script>
-//Instellingen (beheer)
-//In dit scherm komen instellingen zoals de accountgegevens van de inspecteur, de avatar, het wachtwoord,
-// meldingen tonen en geluiden, etc.
 import ToolbarHeader from "@/components/ToolbarHeader.vue";
 export default {
   components: {
@@ -112,8 +108,13 @@ export default {
   data() {
     return {
       settings: [],
-      darkModeEnabled: localStorage.getItem('dark_mode') === 'true' ? true : false,
-      showAvatarAlert: false
+      darkModeEnabled:
+        localStorage.getItem("dark_mode") === "true" ? true : false,
+      showAvatarAlert: false,
+      showPassword: false,
+      userName: localStorage.getItem('username'),
+      password: localStorage.getItem('password'),
+      dialog: false,
     };
   },
   methods: {
@@ -121,9 +122,9 @@ export default {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
       localStorage.setItem("dark_mode", this.$vuetify.theme.dark);
     },
-    changeAvatar(){
+    changeAvatar() {
       this.showAvatarAlert = !this.showAvatarAlert;
-    }
+    },
   },
   computed: {
     themeIcon() {
