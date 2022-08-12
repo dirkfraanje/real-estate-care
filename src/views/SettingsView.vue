@@ -3,11 +3,24 @@
     <ToolbarHeader text="Settings" />
     <v-list two-line subheader>
       <v-subheader>General</v-subheader>
-
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>Profile avatar</v-list-item-title>
           <v-list-item-subtitle>Change your avatar</v-list-item-subtitle>
+         <div><v-btn
+            icon
+            x-large
+            @click="changeAvatar">
+            <v-avatar
+              color="teal"
+              size="46">
+              <span class="text-h6">D</span>
+            </v-avatar>
+          </v-btn ><v-alert v-show="showAvatarAlert"
+      dense
+      outlined
+      type="warning">Changing the avatar is not possible in this prototype
+    </v-alert></div>
         </v-list-item-content>
       </v-list-item>
 
@@ -90,7 +103,7 @@
 <script>
 //Instellingen (beheer)
 //In dit scherm komen instellingen zoals de accountgegevens van de inspecteur, de avatar, het wachtwoord,
-//voorkeuren voor de interface (licht/donker, etc.), meldingen tonen en geluiden, etc.
+// meldingen tonen en geluiden, etc.
 import ToolbarHeader from "@/components/ToolbarHeader.vue";
 export default {
   components: {
@@ -99,7 +112,8 @@ export default {
   data() {
     return {
       settings: [],
-      darkModeEnabled: localStorage.getItem('dark_mode') === 'true' ? true : false
+      darkModeEnabled: localStorage.getItem('dark_mode') === 'true' ? true : false,
+      showAvatarAlert: false
     };
   },
   methods: {
@@ -107,10 +121,13 @@ export default {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
       localStorage.setItem("dark_mode", this.$vuetify.theme.dark);
     },
+    changeAvatar(){
+      this.showAvatarAlert = !this.showAvatarAlert;
+    }
   },
   computed: {
     themeIcon() {
-      return this.darkModeEnabled1 ? "light_mode" : "dark_mode";
+      return this.darkModeEnabled ? "light_mode" : "dark_mode";
     },
   },
 };
