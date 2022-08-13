@@ -24,12 +24,7 @@
           </v-list-item-subtitle> </v-list-item-content
         ><v-btn
           icon
-          @click="
-            $router.push({
-              name: 'InspectionEdit',
-              params: { id: inspection.inspection.id },
-            })
-          "
+          
         >
           <v-icon color="teal lighten-1">edit</v-icon>
         </v-btn>

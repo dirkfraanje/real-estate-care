@@ -27,7 +27,7 @@
               ><v-icon>notifications</v-icon></v-badge
             >
             <v-icon v-if="notificationsCount === 0"
-              >notifications</v-icon
+              >notifications_none</v-icon
             ></v-btn
           >
         </template>
