@@ -7,7 +7,8 @@ export default new Vuex.Store({
         executed_inspections: [],
         assigned_inspections: [],
         executed_count: 0,
-        assigned_count: 0
+        assigned_count: 0,
+        notifications: []
     },
     mutations: {
         SET_EXECUTED_INSPECTIONS(state, payload) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
         SET_ASSIGNED_INSPECTIONS(state, payload) {
             state.assigned_inspections = payload;
             state.assigned_count = state.assigned_inspections.length;
+        },
+        SET_NOTIFICATIONS(state, payload){
+            state.notifications = payload;
         },
         SET_AUTHENTICATION(state){
             //For this prototype we just check for demo/password
@@ -56,6 +60,21 @@ export default new Vuex.Store({
                     ))
                 })
                 .catch((err) => alert(err.message));
+        },
+        fetchNotifications(context){
+            //Fetch notifications for inspector
+            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/notifications")
+            .then((res) => res.json())
+            .then((data) =>{
+                context.commit('SET_NOTIFICATIONS', data.map(
+                    notification => new Notification(notification)
+                ))
+            })
+            .catch((error) => alert(error.message));
+        },
+        dismissNotification(context, notification){
+            //Reload notifications
+            this.state.notifications.splice(this.state.notifications.indexOf(notification), 1)   
         }
     }
 })
@@ -86,6 +105,12 @@ class Inspection {
         this.inventoriedModifications = jsonInspection.modifications.newly_inventoried_modifications_during_inspection.map(
             modification => new Modification(modification)
         );
+    }
+}
+
+class Notification {
+    constructor(jsonNotification){
+        Object.assign(this, jsonNotification);
     }
 }
 

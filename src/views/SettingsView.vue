@@ -8,11 +8,11 @@
           <v-list-item-title>Account</v-list-item-title>
           <v-list-item-subtitle>Account data</v-list-item-subtitle>
           <v-row>
-      <v-col cols="3">Login:</v-col><v-col cols="9">{{ userName }}</v-col>
+      <v-col cols="3">Username:</v-col><v-col cols="9">{{ userName }}</v-col>
       <v-row></v-row>
       <v-col cols="3">Region:</v-col><v-col cols="9">Gelderland</v-col>
       <v-row></v-row>
-      <v-col cols="3">Manager:</v-col><v-col cols="9">Robert Loi</v-col>
+      <v-col cols="3">Manager:</v-col><v-col cols="9">Mr. L. Oi</v-col>
     </v-row>
         </v-list-item-content>
       </v-list-item>
