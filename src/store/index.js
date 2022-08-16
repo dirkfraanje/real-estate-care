@@ -28,24 +28,26 @@ export default new Vuex.Store({
                 localStorage.getItem('username') === 'demo' &&
                 localStorage.getItem('password') === 'password'
         },
-        SET_INSPECTION(state, payload){
+        SET_INSPECTION(state, payload) {
             let inspectionId = payload[0];
             let inspection = state.executed_inspections.find(inspection => inspection.id === inspectionId)
-            if(inspection === undefined){
-                alert('No inspection found with id '+payload[0])
+            if (inspection === undefined) {
+                alert('No inspection found with id ' + payload[0])
                 return;
             }
             inspection.inspection.location.street = payload[1];
             inspection.inspection.location.number = payload[2];
+            inspection.inspection.location.zip_code = payload[3];
+            inspection.inspection.location.city = payload[4];
+            inspection.inspection.execution_date = payload[5];
             const requestOptions = {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(inspection)
-              };
-              console.log(JSON.stringify(inspection))
-            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/executed_inspections/"+inspectionId, requestOptions)
-            .then(alert('succes'))
-            .catch((err) => alert(err.message))
+            };
+            console.log(JSON.stringify(inspection))
+            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/executed_inspections/" + inspectionId, requestOptions)
+                .catch((err) => alert(err.message))
         }
     },
     actions: {
@@ -95,7 +97,7 @@ export default new Vuex.Store({
             //Reload notifications
             this.state.notifications.splice(this.state.notifications.indexOf(notification), 1)
         },
-        changeInspection(context, data){
+        changeInspection(context, data) {
             context.commit('SET_INSPECTION', data)
         }
     }
@@ -125,7 +127,7 @@ class Inspection {
             modification => new Modification(modification)
         );
         //Newly inventoried modifications during inspection
-        this.newly_inventoried_modifications_during_inspection = jsonInspection.damages.map(
+        this.newly_inventoried_modifications_during_inspection = jsonInspection.newly_inventoried_modifications_during_inspection.map(
             modification => new Modification(modification)
         );
     }
