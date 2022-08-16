@@ -82,6 +82,7 @@
                           readonly
                           v-bind="attrs"
                           v-on="on"
+                          v-on:click:append="modal=true"
                         ></v-text-field>
                       </template>
                       <v-date-picker v-model="execution_date" scrollable>
@@ -138,8 +139,7 @@ export default {
   },
   methods: {
     saveInspection() {
-      console.log(this.inspection)
-      this.$store.dispatch('changeInspection', [this.inspection.id, this.street, this.number, this.zip_code, this.city, this.execution_date])
+      this.$store.dispatch('changeInspectionDetails', [this.inspection.id, this.street, this.number, this.zip_code, this.city, this.execution_date])
       this.inspectionDialog = false;
     },
   },

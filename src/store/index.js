@@ -28,25 +28,18 @@ export default new Vuex.Store({
                 localStorage.getItem('username') === 'demo' &&
                 localStorage.getItem('password') === 'password'
         },
-        SET_INSPECTION(state, payload) {
-            let inspectionId = payload[0];
-            let inspection = state.executed_inspections.find(inspection => inspection.id === inspectionId)
-            if (inspection === undefined) {
-                alert('No inspection found with id ' + payload[0])
-                return;
-            }
-            inspection.inspection.location.street = payload[1];
-            inspection.inspection.location.number = payload[2];
-            inspection.inspection.location.zip_code = payload[3];
-            inspection.inspection.location.city = payload[4];
-            inspection.inspection.execution_date = payload[5];
+        UPDATE_INSPECTION(state, payload) {
+
             const requestOptions = {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(inspection)
+                body: JSON.stringify(payload)
             };
-            console.log(JSON.stringify(inspection))
-            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/executed_inspections/" + inspectionId, requestOptions)
+            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/executed_inspections/" + payload.id, requestOptions)
+                .then(res => {
+                    if (!res.ok)
+                        res.json().then((data) => alert('Inspection could not be updated: ' + data))
+                })
                 .catch((err) => alert(err.message))
         }
     },
@@ -97,8 +90,19 @@ export default new Vuex.Store({
             //Reload notifications
             this.state.notifications.splice(this.state.notifications.indexOf(notification), 1)
         },
-        changeInspection(context, data) {
-            context.commit('SET_INSPECTION', data)
+        changeInspectionDetails(context, data) {
+            let inspectionId = data[0];
+            let inspection = this.state.executed_inspections.find(inspection => inspection.id === inspectionId)
+            if (inspection === undefined) {
+                alert('No inspection found with id ' + data[0])
+                return;
+            }
+            inspection.inspection.location.street = data[1];
+            inspection.inspection.location.number = data[2];
+            inspection.inspection.location.zip_code = data[3];
+            inspection.inspection.location.city = data[4];
+            inspection.inspection.execution_date = data[5];
+            context.commit('UPDATE_INSPECTION', inspection)
         }
     }
 })
