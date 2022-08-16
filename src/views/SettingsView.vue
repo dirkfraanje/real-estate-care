@@ -7,13 +7,13 @@
         <v-list-item-content>
           <v-list-item-title>Account</v-list-item-title>
           <v-list-item-subtitle>Account data</v-list-item-subtitle>
-          <v-row>
-      <v-col cols="3">Username:</v-col><v-col cols="9">{{ userName }}</v-col>
-      <v-row></v-row>
-      <v-col cols="3">Region:</v-col><v-col cols="9">Gelderland</v-col>
-      <v-row></v-row>
-      <v-col cols="3">Manager:</v-col><v-col cols="9">Mr. L. Oi</v-col>
-    </v-row>
+          <v-row class="mt-2"
+            ><v-col cols="12">
+              <p>Username: {{ userName }}</p>
+              <p>Region: Gelderland</p>
+              <p>Manager: Mr. L. Oi</p>
+            </v-col>
+          </v-row>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
@@ -65,38 +65,36 @@
         </v-list-item>
 
         <v-list-item @click="dialog = !dialog">
-          <template  v-slot:default="{ active }">
-            <v-list-item-action  >
+          <template v-slot:default="{ active }">
+            <v-list-item-action>
               <v-checkbox :input-value="active" color="primary"></v-checkbox>
             </v-list-item-action>
 
             <v-list-item-content>
               <v-list-item-title>Sound</v-list-item-title>
-              <v-list-item-subtitle>Play sound when a new inspection is assigned</v-list-item-subtitle>
+              <v-list-item-subtitle
+                >Play sound when a new inspection is
+                assigned</v-list-item-subtitle
+              >
             </v-list-item-content>
           </template>
-        </v-list-item>        
+        </v-list-item>
       </v-list-item-group>
     </v-list>
-    <v-dialog
-        v-model="dialog"
-        max-width="400px"
-      >
-        <v-card>
-          <v-card-title>
-            <span>Functionality for this setting is not available in this prototype</span>
-            <v-spacer></v-spacer>
-          </v-card-title>
-          <v-card-actions>
-            <v-btn
-              color="primary"
-              text
-              @click="dialog = false">
-              Close
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+    <v-dialog v-model="dialog" max-width="400px">
+      <v-card>
+        <v-card-title>
+          <span
+            >Functionality for this setting is not available in this
+            prototype</span
+          >
+          <v-spacer></v-spacer>
+        </v-card-title>
+        <v-card-actions>
+          <v-btn color="primary" text @click="dialog = false"> Close </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 <script>
@@ -112,8 +110,8 @@ export default {
         localStorage.getItem("dark_mode") === "true" ? true : false,
       showAvatarAlert: false,
       showPassword: false,
-      userName: localStorage.getItem('username'),
-      password: localStorage.getItem('password'),
+      userName: localStorage.getItem("username"),
+      password: localStorage.getItem("password"),
       dialog: false,
     };
   },

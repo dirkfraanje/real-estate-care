@@ -3,7 +3,7 @@
     <v-list>
       <v-subheader>DEFERRED MAINTENANCE</v-subheader>
         <v-list-item
-          v-for="(item, i) in inspection.deferedMaintenance"
+          v-for="(item, i) in inspection.defered_maintenance"
           :key="i">
           <v-list-item-icon>
             <v-icon color="teal">engineering</v-icon>

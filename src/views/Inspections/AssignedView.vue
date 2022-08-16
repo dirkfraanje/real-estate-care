@@ -9,12 +9,12 @@
         <v-expansion-panel-header class="ml-4"
           ><div>
             <v-icon color="teal lighten-1">{{
-              inspection.details.icon
+              inspection.inspection.icon
             }}</v-icon>
-            {{ inspection.location.street }}
-            {{ inspection.location.number }}
-            {{ inspection.location.number_addition }},
-            {{ inspection.location.city }}
+            {{ inspection.inspection.location.street }}
+            {{ inspection.inspection.location.number }}
+            {{ inspection.inspection.location.number_addition }},
+            {{ inspection.inspection.location.city }}
           </div></v-expansion-panel-header
         >
         <v-expansion-panel-content>

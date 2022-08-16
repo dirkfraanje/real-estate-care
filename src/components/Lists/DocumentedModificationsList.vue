@@ -3,7 +3,7 @@
     <v-list>
       <v-subheader>ALREADY DOCUMENTED MODIFICATIONS</v-subheader>
       <v-list-item
-        v-for="(item, i) in inspection.documentedModifications"
+        v-for="(item, i) in inspection.already_documented_modifications"
         :key="i"
       >
         <v-list-item-icon>

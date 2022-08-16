@@ -19,20 +19,39 @@ export default new Vuex.Store({
             state.assigned_inspections = payload;
             state.assigned_count = state.assigned_inspections.length;
         },
-        SET_NOTIFICATIONS(state, payload){
+        SET_NOTIFICATIONS(state, payload) {
             state.notifications = payload;
         },
-        SET_AUTHENTICATION(state){
+        SET_AUTHENTICATION(state) {
             //For this prototype we just check for demo/password
-            state.isAuthenticated = 
-            localStorage.getItem('username') === 'demo' &&
-            localStorage.getItem('password') === 'password'
+            state.isAuthenticated =
+                localStorage.getItem('username') === 'demo' &&
+                localStorage.getItem('password') === 'password'
+        },
+        SET_INSPECTION(state, payload){
+            let inspectionId = payload[0];
+            let inspection = state.executed_inspections.find(inspection => inspection.id === inspectionId)
+            if(inspection === undefined){
+                alert('No inspection found with id '+payload[0])
+                return;
+            }
+            inspection.inspection.location.street = payload[1];
+            inspection.inspection.location.number = payload[2];
+            const requestOptions = {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(inspection)
+              };
+              console.log(JSON.stringify(inspection))
+            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/executed_inspections/"+inspectionId, requestOptions)
+            .then(alert('succes'))
+            .catch((err) => alert(err.message))
         }
     },
     actions: {
-        authenticate(context){
-        //For prototype only 
-        context.commit('SET_AUTHENTICATION')
+        authenticate(context) {
+            //For prototype only 
+            context.commit('SET_AUTHENTICATION')
         },
         //Fetch executed inspections
         fetchExecutedInspections(context) {
@@ -42,7 +61,7 @@ export default new Vuex.Store({
                     context.commit('SET_EXECUTED_INSPECTIONS', data.map(
                         inspection => new Inspection(inspection)
                     ).sort(
-                        (inspection1, inspection2) => inspection1.details.deadlineDate() - inspection2.details.deadlineDate()
+                        (inspection1, inspection2) => inspection1.inspection.deadlineDate() - inspection2.inspection.deadlineDate()
                     ))
                 })
                 .catch((err) => alert(err.message));
@@ -56,60 +75,64 @@ export default new Vuex.Store({
                     context.commit('SET_ASSIGNED_INSPECTIONS', data.map(
                         inspection => new Inspection(inspection)
                     ).sort(
-                        (inspection1, inspection2) => inspection1.details.deadlineDate() - inspection2.details.deadlineDate()
+                        (inspection1, inspection2) => inspection1.inspection.deadlineDate() - inspection2.inspection.deadlineDate()
                     ))
                 })
                 .catch((err) => alert(err.message));
         },
-        fetchNotifications(context){
+        fetchNotifications(context) {
             //Fetch notifications for inspector
             fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/notifications")
-            .then((res) => res.json())
-            .then((data) =>{
-                context.commit('SET_NOTIFICATIONS', data.map(
-                    notification => new Notification(notification)
-                ))
-            })
-            .catch((error) => alert(error.message));
+                .then((res) => res.json())
+                .then((data) => {
+                    context.commit('SET_NOTIFICATIONS', data.map(
+                        notification => new Notification(notification)
+                    ))
+                })
+                .catch((error) => alert(error.message));
         },
-        dismissNotification(context, notification){
+        dismissNotification(context, notification) {
             //Reload notifications
-            this.state.notifications.splice(this.state.notifications.indexOf(notification), 1)   
+            this.state.notifications.splice(this.state.notifications.indexOf(notification), 1)
+        },
+        changeInspection(context, data){
+            context.commit('SET_INSPECTION', data)
         }
     }
 })
 
 class Inspection {
     constructor(jsonInspection) {
+        this.id = jsonInspection.id;
         //Details
-        this.details = new InspectionDetails(jsonInspection.inspection);
+        this.inspection = new InspectionDetails(jsonInspection.inspection);
         //Location details
-        this.location = new Location(jsonInspection.inspection.location);
+        this.inspection.location = new Location(jsonInspection.inspection.location);
         //Damages
         this.damages = jsonInspection.damages.map(
             damage => new Damage(damage)
         );
         //Defered maintenance
-        this.deferedMaintenance = jsonInspection.deferred_maintenance.map(
+        this.deferred_maintenance = jsonInspection.deferred_maintenance.map(
             maintenance => new DeferedMaintenance(maintenance)
         );
         //Technical installations
-        this.technicalInstallations = jsonInspection.technical_installations.map(
+        this.technical_installations = jsonInspection.technical_installations.map(
             installation => new TechnicalInstallation(installation)
         );
         //Already documented modifications
-        this.documentedModifications = jsonInspection.modifications.already_documented_modifications.map(
+        this.already_documented_modifications = jsonInspection.already_documented_modifications.map(
             modification => new Modification(modification)
         );
         //Newly inventoried modifications during inspection
-        this.inventoriedModifications = jsonInspection.modifications.newly_inventoried_modifications_during_inspection.map(
+        this.newly_inventoried_modifications_during_inspection = jsonInspection.damages.map(
             modification => new Modification(modification)
         );
     }
 }
 
 class Notification {
-    constructor(jsonNotification){
+    constructor(jsonNotification) {
         Object.assign(this, jsonNotification);
     }
 }
@@ -121,20 +144,20 @@ class Damage {
 }
 
 class DeferedMaintenance {
-    constructor(jsonDamage) {
-        Object.assign(this, jsonDamage);
+    constructor(jsonDeferedMaintenance) {
+        Object.assign(this, jsonDeferedMaintenance);
     }
 }
 
 class TechnicalInstallation {
-    constructor(jsonDamage) {
-        Object.assign(this, jsonDamage);
+    constructor(jsonTechnicalInstallation) {
+        Object.assign(this, jsonTechnicalInstallation);
     }
 }
 
 class Modification {
-    constructor(jsonDamage) {
-        Object.assign(this, jsonDamage);
+    constructor(jsonModification) {
+        Object.assign(this, jsonModification);
     }
 }
 
@@ -155,11 +178,11 @@ class InspectionDetails {
             return new Date(this.execution_date);
     }
     formattedDeadlineDate() {
-        return `${this.deadlineDate().getDate()}-${this.deadlineDate().getMonth() + 1}-${this.deadlineDate().getFullYear()}`;
+        return `${this.deadlineDate().getFullYear()}-${this.deadlineDate().getMonth() + 1}-${this.deadlineDate().getDate()}`;
     }
     formattedExecutionDate() {
         if (this.executionDate() !== undefined)
-            return `${this.executionDate().getDate()}-${this.executionDate().getMonth() + 1}-${this.executionDate().getFullYear()}`;
+            return `${this.executionDate().getFullYear()}-${this.executionDate().getMonth() + 1}-${this.executionDate().getDate()}`;
     }
 }
 

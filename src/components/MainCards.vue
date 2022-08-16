@@ -33,13 +33,13 @@ export default {
         title: "Assigned",
         icon: "schedule_send",
         flex: 6,
-        route: "inspections/assigned", badgecontent: 'executed_count'
+        route: "inspections/assigned", badgecontent: 'assigned_count'
       },
       {
         title: "Executed",
         icon: "done_all",
         flex: 6,
-        route: "/inspections/completed", badgecontent: 'assigned_count'
+        route: "/inspections/completed", badgecontent: 'executed_count'
       },
       {
         title: "Knowledge base",

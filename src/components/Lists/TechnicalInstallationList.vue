@@ -3,7 +3,7 @@
     <v-list>
       <v-subheader>TECHNICAL INSTALLATIONS</v-subheader>
       <v-list-item
-        v-for="(item, i) in inspection.technicalInstallations"
+        v-for="(item, i) in inspection.technical_installations"
         :key="i"
       >
         <v-list-item-icon>

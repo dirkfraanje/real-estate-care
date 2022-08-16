@@ -3,7 +3,7 @@
     <v-list>
       <v-subheader>NEWLY INVENTORIED MODIFICATIONS</v-subheader>
       <v-list-item
-        v-for="(item, i) in inspection.inventoriedModifications"
+        v-for="(item, i) in inspection.newly_inventoried_modifications_during_inspection"
         :key="i"
       >
         <v-list-item-icon>
