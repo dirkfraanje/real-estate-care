@@ -99,19 +99,27 @@ export default new Vuex.Store({
             }
             inspection.inspection.location.street = data[1];
             inspection.inspection.location.number = data[2];
-            inspection.inspection.location.zip_code = data[3];
-            inspection.inspection.location.city = data[4];
-            inspection.inspection.execution_date = data[5];
+            inspection.inspection.location.number_addition = data[3];
+            inspection.inspection.location.zip_code = data[4];
+            inspection.inspection.location.city = data[5];
+            inspection.inspection.execution_date = data[6];
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
         },
-        changeDamageDetails(context, data){
+        changeDamageDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === inspectionId)
             if (inspection === undefined) {
                 alert('No inspection found with id ' + data[0])
                 return false;
             }
+            let damage = inspection.damages.find(damage => damage.id === data[1])
+            damage.location = data[2]
+            damage.description = data[3];
+            damage.new_damage = data[4];
+            damage.type_of_damage = data[5];
+            damage.acute_action_required = data[6];
+            damage.date = data[7];
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
         }
@@ -158,6 +166,10 @@ class Damage {
     constructor(jsonDamage) {
         Object.assign(this, jsonDamage);
     }
+    datetime() {
+        if (this.date.length !== 0)
+            return new Date(this.date);
+    }
 }
 
 class DeferedMaintenance {
@@ -181,11 +193,6 @@ class Modification {
 class InspectionDetails {
     constructor(jsonInspectionDetails) {
         Object.assign(this, jsonInspectionDetails);
-    }
-
-
-    exectued() {
-        this.execution_date !== null;
     }
     deadlineDate() {
         return new Date(this.deadline_date);

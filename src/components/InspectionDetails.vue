@@ -61,6 +61,12 @@
                       :rules="rules.text"
                       required
                     ></v-text-field> </v-col
+                  >
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      v-model="number_addition"
+                      label="Number addition"
+                    ></v-text-field> </v-col
                   ><v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="zip_code"
@@ -80,7 +86,6 @@
                     <v-dialog
                       ref="dialog"
                       v-model="modal"
-                      :return-value.sync="execution_date"
                       persistent
                       width="290px"
                     >
@@ -149,6 +154,7 @@ export default {
       modal: false,
       street: this.inspection.inspection.location.street,
       number: this.inspection.inspection.location.number,
+      number_addition: this.inspection.inspection.location.number_addition,
       city: this.inspection.inspection.location.city,
       zip_code: this.inspection.inspection.location.zip_code,
       execution_date: this.inspection.inspection
@@ -167,6 +173,7 @@ export default {
           this.inspection.id,
           this.street,
           this.number,
+          this.number_addition,
           this.zip_code,
           this.city,
           this.execution_date,
@@ -178,10 +185,8 @@ export default {
               this.inspectionDialog = false;
               this.$emit('saved', 'success');
             }
-            else{
-              this.inspectionDialog = false;
+            else
               this.$emit('saved', 'failed');
-            }
           },
           (error) => {
             console.log(error);

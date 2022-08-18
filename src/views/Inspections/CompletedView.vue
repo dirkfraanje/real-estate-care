@@ -33,7 +33,7 @@
             :inspection="inspection"
             @saved="saved"
           />
-          <DamagesList :inspection="inspection" />
+          <DamagesList :inspection="inspection" @saved="saved"/>
           <DeferedMaintenanceList :inspection="inspection" />
           <TechnicalInstallationList :inspection="inspection" />
           <DocumentedModificationsList :inspection="inspection" />
