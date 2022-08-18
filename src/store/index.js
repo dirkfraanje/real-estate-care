@@ -95,14 +95,25 @@ export default new Vuex.Store({
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === inspectionId)
             if (inspection === undefined) {
                 alert('No inspection found with id ' + data[0])
-                return;
+                return false;
             }
             inspection.inspection.location.street = data[1];
             inspection.inspection.location.number = data[2];
             inspection.inspection.location.zip_code = data[3];
             inspection.inspection.location.city = data[4];
             inspection.inspection.execution_date = data[5];
-            context.commit('UPDATE_INSPECTION', inspection)
+            context.commit('UPDATE_INSPECTION', inspection);
+            return true;
+        },
+        changeDamageDetails(context, data){
+            let inspectionId = data[0];
+            let inspection = this.state.executed_inspections.find(inspection => inspection.id === inspectionId)
+            if (inspection === undefined) {
+                alert('No inspection found with id ' + data[0])
+                return false;
+            }
+            context.commit('UPDATE_INSPECTION', inspection);
+            return true;
         }
     }
 })

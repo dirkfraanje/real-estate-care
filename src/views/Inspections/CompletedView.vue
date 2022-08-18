@@ -1,8 +1,22 @@
 <template>
-  <v-card class="mx-auto">
+  <v-card class="mx-auto"
+    ><v-snackbar
+      v-model="snackbar"
+      :timeout="2500"
+      top
+      elevation="20"
+      rounded
+      class="ml-5"
+      :color="snackbarcolor"
+    >
+      <h3 class="ml-2">{{ snackbartext }}</h3>
+    </v-snackbar>
     <ToolbarHeader text="Executed inspections" />
     <v-expansion-panels>
-      <v-expansion-panel v-for="(inspection, i) in this.$store.state.executed_inspections" :key="i">
+      <v-expansion-panel
+        v-for="(inspection, i) in this.$store.state.executed_inspections"
+        :key="i"
+      >
         <v-expansion-panel-header class="ml-4"
           ><div>
             <v-icon color="teal lighten-1">{{
@@ -15,7 +29,10 @@
           </div></v-expansion-panel-header
         >
         <v-expansion-panel-content>
-          <InspectionDetails :inspection="inspection" />
+          <InspectionDetails
+            :inspection="inspection"
+            @saved="saved"
+          />
           <DamagesList :inspection="inspection" />
           <DeferedMaintenanceList :inspection="inspection" />
           <TechnicalInstallationList :inspection="inspection" />
@@ -33,8 +50,15 @@ import DeferedMaintenanceList from "@/components/Lists/DeferedMaintenanceList.vu
 import TechnicalInstallationList from "@/components/Lists/TechnicalInstallationList.vue";
 import DocumentedModificationsList from "@/components/Lists/DocumentedModificationsList.vue";
 import InventoriedModificationsList from "@/components/Lists/InventoriedModificationsList.vue";
-import ToolbarHeader from '@/components/ToolbarHeader.vue'
+import ToolbarHeader from "@/components/ToolbarHeader.vue";
 export default {
+  data() {
+    return {
+      snackbar: false,
+      snackbartext: '',
+      snackbarcolor: 'teal accent-4'
+    };
+  },
   components: {
     InspectionDetails,
     DamagesList,
@@ -42,7 +66,20 @@ export default {
     TechnicalInstallationList,
     DocumentedModificationsList,
     InventoriedModificationsList,
-    ToolbarHeader
+    ToolbarHeader,
+  },
+  methods:{
+    saved(message){
+      if(message === 'success'){
+        this.snackbartext = 'Saved..'
+        this.snackbarcolor = 'teal accent-4';
+      }else{
+        this.snackbarcolor = 'orange accent-4';
+        this.snackbartext = 'Save failed..'
+      }
+      this.snackbar = true;
+      
+    }
   }
 };
 </script>

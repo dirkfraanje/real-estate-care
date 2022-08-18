@@ -1,12 +1,12 @@
 <template>
-  <v-app 
+  <v-app
     ><div>
       <TopNavigation v-if="!isLoginView" />
     </div>
     <v-main>
       <router-view />
     </v-main>
-    <BottomNavigation v-if="!isLoginView"/>
+    <BottomNavigation v-if="!isLoginView" />
   </v-app>
 </template>
 
@@ -20,19 +20,22 @@ export default {
     TopNavigation,
     BottomNavigation,
   },
-  data: () => ({
-    
-  }),
-  computed:{
-    isLoginView(){
-      return this.$route.name === 'login'
-    }
+  data: () => ({}),
+  computed: {
+    isLoginView() {
+      return this.$route.name === "login";
+    },
   },
   created() {
-    this.$store.dispatch('fetchExecutedInspections');
-    this.$store.dispatch('fetchAssignedInspections');
-    this.$store.dispatch('fetchNotifications');
-    this.$vuetify.theme.dark = localStorage.getItem('dark_mode') === 'true' ? true : false;
+    this.$store.dispatch("fetchExecutedInspections");
+    this.$store.dispatch("fetchAssignedInspections");
+    this.$store.dispatch("fetchNotifications");
+    this.$vuetify.theme.dark =
+      localStorage.getItem("dark_mode") === "true" ? true : false;
+    if (!localStorage.getItem("username")) {
+      localStorage.setItem("username", "demo");
+      localStorage.setItem("password", "password");
+    }
   },
 };
 </script>

@@ -9,7 +9,9 @@
           <v-list-item-title>
             {{ inspection.inspection.location.street }}
             {{ inspection.inspection.location.number }}
-            {{ inspection.inspection.location.number_addition }}</v-list-item-title
+            {{
+              inspection.inspection.location.number_addition
+            }}</v-list-item-title
           >
           <v-list-item-subtitle>
             {{ inspection.inspection.location.zip_code }}
@@ -34,9 +36,13 @@
             </v-card-title>
             <v-card-text>
               <v-container>
-                <v-row><v-col cols="12" sm="6" md="4">
-                    <v-text-field disabled
-                      :value="this.inspection.inspection.formattedDeadlineDate()"
+                <v-row
+                  ><v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      disabled
+                      :value="
+                        this.inspection.inspection.formattedDeadlineDate()
+                      "
                       label="Deadline date"
                     ></v-text-field>
                   </v-col>
@@ -44,6 +50,7 @@
                     <v-text-field
                       v-model="street"
                       label="Street*"
+                      :rules="rules.text"
                       required
                     ></v-text-field>
                   </v-col>
@@ -51,18 +58,21 @@
                     <v-text-field
                       v-model="number"
                       label="Number*"
+                      :rules="rules.text"
                       required
                     ></v-text-field> </v-col
                   ><v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="zip_code"
                       label="Zip code*"
+                      :rules="rules.text"
                       required
                     ></v-text-field> </v-col
                   ><v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="city"
                       label="City*"
+                      :rules="rules.text"
                       required
                     ></v-text-field>
                   </v-col>
@@ -77,12 +87,13 @@
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                           v-model="execution_date"
+                          :rules="rules.text"
                           label="Execution date"
                           append-icon="mdi-calendar"
                           readonly
                           v-bind="attrs"
                           v-on="on"
-                          v-on:click:append="modal=true"
+                          v-on:click:append="modal = true"
                         ></v-text-field>
                       </template>
                       <v-date-picker v-model="execution_date" scrollable>
@@ -113,7 +124,7 @@
               >
                 Cancel
               </v-btn>
-              <v-btn color="blue darken-1" text @click="saveInspection">
+              <v-btn :disabled="!inspectionValid" color="blue darken-1" text @click="saveInspection">
                 Save
               </v-btn>
             </v-card-actions>
@@ -126,6 +137,12 @@
 <script>
 export default {
   name: "InspectionDetails",
+  props: {
+    inspection: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       inspectionDialog: false,
@@ -134,20 +151,49 @@ export default {
       number: this.inspection.inspection.location.number,
       city: this.inspection.inspection.location.city,
       zip_code: this.inspection.inspection.location.zip_code,
-      execution_date: this.inspection.inspection.executionDate().toISOString().substr(0, 10)
+      execution_date: this.inspection.inspection
+        .executionDate()
+        .toISOString()
+        .substr(0, 10),
+        rules: {
+          text: [val => (val || '').length > 0 || 'This field is required'],
+        }
     };
   },
   methods: {
     saveInspection() {
-      this.$store.dispatch('changeInspectionDetails', [this.inspection.id, this.street, this.number, this.zip_code, this.city, this.execution_date])
-      this.inspectionDialog = false;
+      this.$store
+        .dispatch("changeInspectionDetails", [
+          this.inspection.id,
+          this.street,
+          this.number,
+          this.zip_code,
+          this.city,
+          this.execution_date,
+        ])
+        .then(
+          (response) => {
+            console.log(response);
+            if (response === true) {
+              this.inspectionDialog = false;
+              this.$emit('saved', 'success');
+            }
+            else{
+              this.inspectionDialog = false;
+              this.$emit('saved', 'failed');
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     },
   },
-  props: {
-    inspection: {
-      type: Object,
-      required: true,
-    },
+   computed:{
+    inspectionValid(){
+      return this.street && this.number && this.zip_code && this.city && this.execution_date
+    }
   },
+  
 };
 </script>
