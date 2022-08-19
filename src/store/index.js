@@ -120,6 +120,7 @@ export default new Vuex.Store({
             damage.type_of_damage = data[5];
             damage.acute_action_required = data[6];
             damage.date = data[7];
+            localStorage.setItem(`damagephoto-${inspectionId}-${damage.id}`, data[8])
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
         }
@@ -166,10 +167,6 @@ class Damage {
     constructor(jsonDamage, inspectionId) {
         Object.assign(this, jsonDamage);
         this.inspectionId = inspectionId;
-    }
-    datetime() {
-        if (this.date.length !== 0)
-            return new Date(this.date);
     }
 }
 
