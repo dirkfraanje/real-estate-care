@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import Damage from '@/store/Damage'
+import Inspection from './Classes/Inspection';
+import Damage from './Classes/Damage'
+import Notification from './Classes/Notification';
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
@@ -141,83 +143,3 @@ export default new Vuex.Store({
         }
     }
 })
-
-class Inspection {
-    constructor(jsonInspection) {
-        this.id = jsonInspection.id;
-        //Details
-        this.inspection = new InspectionDetails(jsonInspection.inspection);
-        //Location details
-        this.inspection.location = new Location(jsonInspection.inspection.location);
-        //Damages
-        this.damages = jsonInspection.damages.map(
-            damage => new Damage(damage, this.id, null)
-        );
-        //Defered maintenance
-        this.deferred_maintenance = jsonInspection.deferred_maintenance.map(
-            maintenance => new DeferedMaintenance(maintenance)
-        );
-        //Technical installations
-        this.technical_installations = jsonInspection.technical_installations.map(
-            installation => new TechnicalInstallation(installation)
-        );
-        //Already documented modifications
-        this.already_documented_modifications = jsonInspection.already_documented_modifications.map(
-            modification => new Modification(modification)
-        );
-        //Newly inventoried modifications during inspection
-        this.newly_inventoried_modifications_during_inspection = jsonInspection.newly_inventoried_modifications_during_inspection.map(
-            modification => new Modification(modification)
-        );
-    }
-}
-
-class Notification {
-    constructor(jsonNotification) {
-        Object.assign(this, jsonNotification);
-    }
-}
-
-class DeferedMaintenance {
-    constructor(jsonDeferedMaintenance) {
-        Object.assign(this, jsonDeferedMaintenance);
-    }
-}
-
-class TechnicalInstallation {
-    constructor(jsonTechnicalInstallation) {
-        Object.assign(this, jsonTechnicalInstallation);
-    }
-}
-
-class Modification {
-    constructor(jsonModification) {
-        Object.assign(this, jsonModification);
-    }
-}
-
-class InspectionDetails {
-    constructor(jsonInspectionDetails) {
-        Object.assign(this, jsonInspectionDetails);
-    }
-    deadlineDate() {
-        return new Date(this.deadline_date);
-    }
-    executionDate() {
-        if (this.execution_date.length !== 0)
-            return new Date(this.execution_date);
-    }
-    formattedDeadlineDate() {
-        return `${this.deadlineDate().getFullYear()}-${this.deadlineDate().getMonth() + 1}-${this.deadlineDate().getDate()}`;
-    }
-    formattedExecutionDate() {
-        if (this.executionDate() !== undefined)
-            return `${this.executionDate().getFullYear()}-${this.executionDate().getMonth() + 1}-${this.executionDate().getDate()}`;
-    }
-}
-
-class Location {
-    constructor(jsonLocation) {
-        Object.assign(this, jsonLocation);
-    }
-}

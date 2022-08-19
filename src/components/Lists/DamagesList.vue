@@ -24,7 +24,7 @@
 
 
 <script>
-import Damage from '@/store/Damage.js'
+import Damage from '@/store/Classes/Damage'
 export default {
   name: "DamagesList",
   props: {
