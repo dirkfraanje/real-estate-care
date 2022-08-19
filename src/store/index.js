@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Damage from '@/store/Damage'
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
@@ -111,15 +112,19 @@ export default new Vuex.Store({
             if (inspection === undefined) 
                 return false;
             let damage = inspection.damages.find(damage => damage.id === data[1])
-            if (damage === undefined)
-                return false;
-                
+            if (damage === undefined){
+                //If the damage is not found then this is a new damage
+                damage = new Damage(null, inspectionId, `${Math.max(...inspection.damages.map(o => o.id))+1}`)
+                inspection.damages.push(damage);
+            }
+
             damage.location = data[2]
             damage.description = data[3];
             damage.new_damage = data[4];
             damage.type_of_damage = data[5];
             damage.acute_action_required = data[6];
             damage.date = data[7];
+            
             localStorage.setItem(`damagephoto-${inspectionId}-${damage.id}`, data[8])
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
@@ -136,7 +141,7 @@ class Inspection {
         this.inspection.location = new Location(jsonInspection.inspection.location);
         //Damages
         this.damages = jsonInspection.damages.map(
-            damage => new Damage(damage, this.id)
+            damage => new Damage(damage, this.id, null)
         );
         //Defered maintenance
         this.deferred_maintenance = jsonInspection.deferred_maintenance.map(
@@ -160,13 +165,6 @@ class Inspection {
 class Notification {
     constructor(jsonNotification) {
         Object.assign(this, jsonNotification);
-    }
-}
-
-class Damage {
-    constructor(jsonDamage, inspectionId) {
-        Object.assign(this, jsonDamage);
-        this.inspectionId = inspectionId;
     }
 }
 

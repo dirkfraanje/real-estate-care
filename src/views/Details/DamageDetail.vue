@@ -1,5 +1,5 @@
 <template>
-  <v-form class="mb-2"
+  <v-form class="mb-2" v-model="valid"
     ><ToolbarHeader text="Edit damage" />
     <v-container>
       <v-row>
@@ -7,7 +7,7 @@
           <v-text-field
             v-model="location"
             label="Location*"
-            :rules="rules.text"
+            :rules="rules.textRequired"
             required
           ></v-text-field>
         </v-col>
@@ -15,7 +15,7 @@
           <v-text-field
             v-model="description"
             label="Description*"
-            :rules="rules.text"
+            :rules="rules.textRequired"
             required
           ></v-text-field>
         </v-col>
@@ -24,6 +24,8 @@
             :items="damageType"
             label="Type"
             v-model="type_of_damage"
+            :rules="rules.textRequired"
+            required
           ></v-select>
         </v-col>
         <v-col cols="12" sm="6" md="4">
@@ -40,8 +42,9 @@
           <v-dialog ref="dialog" v-model="modal" persistent width="290px">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
+              :rules="rules.textRequired"
+            required
                 v-model="date"
-                :rules="rules.text"
                 label="Date"
                 append-icon="mdi-calendar"
                 readonly
@@ -62,7 +65,7 @@
           </v-dialog>
         </v-col>
         <v-col cols="12" sm="6" md="4">
-          <v-file-input
+          <v-file-input hide-input color="teal"
             prepend-icon="mdi-camera"
             accept="image/png, image/jpg, image/jpeg, image/bmp"
             @change="photoSelected"
@@ -70,20 +73,15 @@
         </v-col>
         <v-col cols="12" sm="6" md="4"
           ><v-img :src="photo" max-width="500" max-height="300" id="im">
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
+            
           </v-img>
         </v-col>
       </v-row>
       <v-row justify="space-around">
         <v-btn @click="$router.go(-1)"> Cancel </v-btn>
-        <v-btn @click="saveDamage" color="primary">Save</v-btn></v-row
+        <v-btn :disabled="!valid" @click="saveDamage" color="primary"
+          >Save</v-btn
+        ></v-row
       >
     </v-container>
   </v-form>
@@ -100,6 +98,7 @@ export default {
   },
   data() {
     return {
+      valid: true,
       modal: false,
       photo: null,
       rules: {
@@ -110,6 +109,9 @@ export default {
     };
   },
   methods: {
+    validate() {
+      this.$refs.form.validate();
+    },
     saveDamage() {
       this.$store
         .dispatch("changeDamageDetails", [
@@ -134,28 +136,7 @@ export default {
           }
         );
       this.$router.back();
-    },
-    photoSelected(event) {
-      if (!event) return;
-      const reader = new FileReader();
-      reader.readAsDataURL(event);
-      reader.onload = () => {
-        const imgElement = document.createElement("img");
-        imgElement.src = reader.result;
-
-        imgElement.onload = (e) => {
-          const canvas = document.createElement("canvas");
-          const MAX = 300;
-          const scale = MAX / e.target.width;
-          canvas.width = MAX;
-          canvas.height = e.target.height * scale;
-
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height);
-          this.photo = ctx.canvas.toDataURL(e.target.result)
-        };
-      };
-    },
+    }
   },
   created() {
     this.inspectionid = this.$route.params.damage.inspectionId;
@@ -170,11 +151,6 @@ export default {
     this.photo = localStorage.getItem(
       `damagephoto-${this.inspectionid}-${this.id}`
     );
-  },
-  computed: {
-    damageValid() {
-      return this.location && this.description && this.type && this.damageDate;
-    },
   },
 };
 </script>
