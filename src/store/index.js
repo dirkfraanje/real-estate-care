@@ -93,10 +93,9 @@ export default new Vuex.Store({
         changeInspectionDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === inspectionId)
-            if (inspection === undefined) {
-                alert('No inspection found with id ' + data[0])
+            if (inspection === undefined) 
                 return false;
-            }
+            
             inspection.inspection.location.street = data[1];
             inspection.inspection.location.number = data[2];
             inspection.inspection.location.number_addition = data[3];
@@ -109,11 +108,12 @@ export default new Vuex.Store({
         changeDamageDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === inspectionId)
-            if (inspection === undefined) {
-                alert('No inspection found with id ' + data[0])
+            if (inspection === undefined) 
                 return false;
-            }
             let damage = inspection.damages.find(damage => damage.id === data[1])
+            if (damage === undefined)
+                return false;
+                
             damage.location = data[2]
             damage.description = data[3];
             damage.new_damage = data[4];
@@ -135,7 +135,7 @@ class Inspection {
         this.inspection.location = new Location(jsonInspection.inspection.location);
         //Damages
         this.damages = jsonInspection.damages.map(
-            damage => new Damage(damage)
+            damage => new Damage(damage, this.id)
         );
         //Defered maintenance
         this.deferred_maintenance = jsonInspection.deferred_maintenance.map(
@@ -163,8 +163,9 @@ class Notification {
 }
 
 class Damage {
-    constructor(jsonDamage) {
+    constructor(jsonDamage, inspectionId) {
         Object.assign(this, jsonDamage);
+        this.inspectionId = inspectionId;
     }
     datetime() {
         if (this.date.length !== 0)
