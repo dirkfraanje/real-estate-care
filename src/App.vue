@@ -27,8 +27,7 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("fetchExecutedInspections");
-    this.$store.dispatch("fetchAssignedInspections");
+    this.$store.dispatch("fetchInspections");
     this.$store.dispatch("fetchNotifications");
     this.$vuetify.theme.dark =
       localStorage.getItem("dark_mode") === "true" ? true : false;

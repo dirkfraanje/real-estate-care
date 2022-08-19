@@ -9,6 +9,7 @@ export default new Vuex.Store({
         isAuthenticated: false,
         executed_inspections: [],
         assigned_inspections: [],
+        all_inspections: [],
         executed_count: 0,
         assigned_count: 0,
         notifications: []
@@ -38,7 +39,7 @@ export default new Vuex.Store({
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             };
-            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/executed_inspections/" + payload.id, requestOptions)
+            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/inspections/" + payload.id, requestOptions)
                 .then(res => {
                     if (!res.ok)
                         res.json().then((data) => alert('Inspection could not be updated: ' + data))
@@ -52,31 +53,25 @@ export default new Vuex.Store({
             context.commit('SET_AUTHENTICATION')
         },
         //Fetch executed inspections
-        fetchExecutedInspections(context) {
-            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/executed_inspections")
+        fetchInspections(context) {
+            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/inspections")
                 .then((res) => res.json())
                 .then((data) => {
-                    context.commit('SET_EXECUTED_INSPECTIONS', data.map(
+                    this.state.all_inspections = data.map(
                         inspection => new Inspection(inspection)
                     ).sort(
                         (inspection1, inspection2) => inspection1.inspection.deadlineDate() - inspection2.inspection.deadlineDate()
-                    ))
+                    );
+                    context.dispatch('setExecutedAndAssigned')
                 })
                 .catch((err) => alert(err.message));
 
         },
-        fetchAssignedInspections(context) {
-            //Fetch assigned inspections
-            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/assigned_inspections")
-                .then((res) => res.json())
-                .then((data) => {
-                    context.commit('SET_ASSIGNED_INSPECTIONS', data.map(
-                        inspection => new Inspection(inspection)
-                    ).sort(
-                        (inspection1, inspection2) => inspection1.inspection.deadlineDate() - inspection2.inspection.deadlineDate()
-                    ))
-                })
-                .catch((err) => alert(err.message));
+        setExecutedAndAssigned(context){
+            let assignedInspections = this.state.all_inspections.filter(inspection => inspection.inspection.execution_date.length === 0)
+            let executedInspections = this.state.all_inspections.filter(inspection => inspection.inspection.execution_date.length > 0)
+            context.commit('SET_EXECUTED_INSPECTIONS', executedInspections)
+            context.commit('SET_ASSIGNED_INSPECTIONS', assignedInspections)
         },
         fetchNotifications(context) {
             //Fetch notifications for inspector
@@ -93,9 +88,9 @@ export default new Vuex.Store({
             //Reload notifications
             this.state.notifications.splice(this.state.notifications.indexOf(notification), 1)
         },
-        changeInspectionDetails(context, data) {
+        async changeInspectionDetails(context, data) {
             let inspectionId = data[0];
-            let inspection = this.state.executed_inspections.find(inspection => inspection.id === inspectionId)
+            let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
             if (inspection === undefined)
                 return false;
 
@@ -105,12 +100,14 @@ export default new Vuex.Store({
             inspection.inspection.location.zip_code = data[4];
             inspection.inspection.location.city = data[5];
             inspection.inspection.execution_date = data[6];
-            context.commit('UPDATE_INSPECTION', inspection);
+            await context.commit('UPDATE_INSPECTION', inspection);
+            
+            context.dispatch('setExecutedAndAssigned')
             return true;
         },
         changeDamageDetails(context, data) {
             let inspectionId = data[0];
-            let inspection = this.state.executed_inspections.find(inspection => inspection.id === inspectionId)
+            let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
             if (inspection === undefined)
                 return false;
             let damage = inspection.damages.find(damage => damage.id === data[1])
@@ -138,7 +135,7 @@ export default new Vuex.Store({
             let damage = inspection.damages.find(damage => damage.id === data[1]);
             if (damage === undefined)
                 return false;
-            inspection.damages.splice(inspection.damages.indexOf(damage),1)
+            inspection.damages.splice(inspection.damages.indexOf(damage), 1)
             context.commit('UPDATE_INSPECTION', inspection)
         }
     }

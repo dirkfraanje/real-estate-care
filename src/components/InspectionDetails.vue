@@ -18,11 +18,11 @@
             {{ inspection.inspection.location.city }}</v-list-item-subtitle
           ><v-list-item-subtitle
             ><span class="font-weight-bold">Deadline:</span>
-            {{ inspection.inspection.formattedDeadlineDate() }}
+            {{ inspection.inspection.deadline_date }}
           </v-list-item-subtitle>
           <v-list-item-subtitle
             ><span class="font-weight-bold">Executed:</span>
-            {{ inspection.inspection.formattedExecutionDate() }}
+            {{ inspection.inspection.execution_date }}
           </v-list-item-subtitle> </v-list-item-content
         ><v-dialog v-model="inspectionDialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }"
@@ -41,7 +41,7 @@
                     <v-text-field
                       disabled
                       :value="
-                        this.inspection.inspection.formattedDeadlineDate()
+                        this.inspection.inspection.deadline_date
                       "
                       label="Deadline date"
                     ></v-text-field>
@@ -92,7 +92,6 @@
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                           v-model="execution_date"
-                          :rules="rules.text"
                           label="Execution date"
                           append-icon="mdi-calendar"
                           readonly
@@ -150,6 +149,7 @@ export default {
   },
   data() {
     return {
+      initialExecutionDate: this.inspection.inspection.execution_date,
       inspectionDialog: false,
       modal: false,
       street: this.inspection.inspection.location.street,
@@ -157,18 +157,15 @@ export default {
       number_addition: this.inspection.inspection.location.number_addition,
       city: this.inspection.inspection.location.city,
       zip_code: this.inspection.inspection.location.zip_code,
-      execution_date: this.inspection.inspection
-        .executionDate()
-        .toISOString()
-        .substr(0, 10),
+      execution_date: this.inspection.inspection.execution_date,
         rules: {
           text: [val => (val || '').length > 0 || 'This field is required'],
         }
     };
   },
   methods: {
-    saveInspection() {
-      this.$store
+    async saveInspection() {
+      await this.$store
         .dispatch("changeInspectionDetails", [
           this.inspection.id,
           this.street,
@@ -182,6 +179,10 @@ export default {
           (response) => {
             console.log(response);
             if (response === true) {
+              
+              if(!this.initialExecutionDate && this.execution_date){
+                this.$router.push('completed')
+              }
               this.inspectionDialog = false;
               this.$emit('saved', 'success');
             }
@@ -196,7 +197,7 @@ export default {
   },
    computed:{
     inspectionValid(){
-      return this.street && this.number && this.zip_code && this.city && this.execution_date
+      return this.street && this.number && this.zip_code && this.city
     }
   },
   
