@@ -94,9 +94,9 @@ export default new Vuex.Store({
         changeInspectionDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === inspectionId)
-            if (inspection === undefined) 
+            if (inspection === undefined)
                 return false;
-            
+
             inspection.inspection.location.street = data[1];
             inspection.inspection.location.number = data[2];
             inspection.inspection.location.number_addition = data[3];
@@ -109,12 +109,12 @@ export default new Vuex.Store({
         changeDamageDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === inspectionId)
-            if (inspection === undefined) 
+            if (inspection === undefined)
                 return false;
             let damage = inspection.damages.find(damage => damage.id === data[1])
-            if (damage === undefined){
+            if (damage === undefined) {
                 //If the damage is not found then this is a new damage
-                damage = new Damage(null, inspectionId, `${Math.max(...inspection.damages.map(o => o.id))+1}`)
+                damage = new Damage(null, inspectionId, `${inspection.damages.length !== 0 ? Math.max(...inspection.damages.map(o => o.id)) + 1 : 1}`)
                 inspection.damages.push(damage);
             }
 
@@ -124,10 +124,20 @@ export default new Vuex.Store({
             damage.type_of_damage = data[5];
             damage.acute_action_required = data[6];
             damage.date = data[7];
-            
+
             localStorage.setItem(`damagephoto-${inspectionId}-${damage.id}`, data[8])
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
+        },
+        deleteDamage(context, data) {
+            let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
+            if (inspection === undefined)
+                return false;
+            let damage = inspection.damages.find(damage => damage.id === data[1]);
+            if (damage === undefined)
+                return false;
+            inspection.damages.splice(inspection.damages.indexOf(damage),1)
+            context.commit('UPDATE_INSPECTION', inspection)
         }
     }
 })

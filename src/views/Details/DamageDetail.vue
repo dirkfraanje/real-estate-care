@@ -1,7 +1,58 @@
 <template>
   <v-form class="mb-2" v-model="valid"
-    ><ToolbarHeader text="Edit damage" />
+    >
     <v-container>
+      <v-row class="mt-2" justify="space-around" ><v-btn @click="$router.go(-1)"> Cancel </v-btn>
+        <v-btn :disabled="!valid" @click="saveDamage" color="primary"
+          >Save</v-btn
+        ><div class="text-center">
+    <v-dialog
+      v-model="deletedialog"
+      width="500"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="red lighten-2"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          Delete
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-title class="text-h6">
+          Confirm deletion
+        </v-card-title>
+
+        <v-card-text>
+          Are you sure you want to delete this damage?
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="deletedialog = false"
+          >
+            Cancel
+          </v-btn><v-btn
+            color="error"
+            text
+            @click="deleteDamage"
+          >
+            Delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
+       </v-row
+      >
       <v-row>
         <v-col cols="12" sm="6" md="4">
           <v-text-field
@@ -77,27 +128,20 @@
           </v-img>
         </v-col>
       </v-row>
-      <v-row justify="space-around">
-        <v-btn @click="$router.go(-1)"> Cancel </v-btn>
-        <v-btn :disabled="!valid" @click="saveDamage" color="primary"
-          >Save</v-btn
-        ></v-row
-      >
+      
     </v-container>
   </v-form>
 </template>
 
 <script>
-import ToolbarHeader from "@/components/ToolbarHeader.vue";
 import mixins from "@/mixins/mixins";
 export default {
   name: "DamageDetail",
   mixins: [mixins],
-  components: {
-    ToolbarHeader,
-  },
+
   data() {
     return {
+      deletedialog: false,
       valid: true,
       modal: false,
       photo: null,
@@ -135,6 +179,11 @@ export default {
             console.log(error);
           }
         );
+      this.$router.back();
+    },
+    deleteDamage(){
+      this.$store.dispatch('deleteDamage', [this.inspectionid, this.id])
+      this.deletedialog = false;
       this.$router.back();
     }
   },
