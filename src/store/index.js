@@ -12,9 +12,20 @@ export default new Vuex.Store({
         all_inspections: [],
         executed_count: 0,
         assigned_count: 0,
-        notifications: []
+        notifications: [],
+        showMainSnackbar: false,
+        mainSnackbarText: '',
+        snackbarcolor: 'teal accent-4'
     },
     mutations: {
+        SHOW_SNACKBAR(state, payload) {
+            state.showMainSnackbar = true;
+            state.mainSnackbarText = payload[0]
+            state.snackbarcolor = payload[1]
+        },
+        HIDE_SNACKBAR(state) {
+            state.showMainSnackbar = false;
+        },
         SET_EXECUTED_INSPECTIONS(state, payload) {
             state.executed_inspections = payload;
             state.executed_count = state.executed_inspections.length;
@@ -40,11 +51,18 @@ export default new Vuex.Store({
                 body: JSON.stringify(payload)
             };
             fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/inspections/" + payload.id, requestOptions)
-                .then(res => {
-                    if (!res.ok)
-                        res.json().then((data) => alert('Inspection could not be updated: ' + data))
+                .then(res => { 
+                    if (!res.ok) {
+                        res.json().then((data) => {
+                            this.dispatch('showSnackbarFailed', data)
+                        })
+                    }
+                    else{
+                        this.dispatch('showSnackbarSucces', 'Update inspection succeeded');
+                        this.dispatch('setExecutedAndAssigned')
+                    }
                 })
-                .catch((err) => alert(err.message))
+                .catch((err) => this.dispatch('showSnackbarFailed', err.message))
         }
     },
     actions: {
@@ -67,7 +85,7 @@ export default new Vuex.Store({
                 .catch((err) => alert(err.message));
 
         },
-        setExecutedAndAssigned(context){
+        setExecutedAndAssigned(context) {
             let assignedInspections = this.state.all_inspections.filter(inspection => inspection.inspection.execution_date.length === 0)
             let executedInspections = this.state.all_inspections.filter(inspection => inspection.inspection.execution_date.length > 0)
             context.commit('SET_EXECUTED_INSPECTIONS', executedInspections)
@@ -88,7 +106,7 @@ export default new Vuex.Store({
             //Reload notifications
             this.state.notifications.splice(this.state.notifications.indexOf(notification), 1)
         },
-        async changeInspectionDetails(context, data) {
+        changeInspectionDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
             if (inspection === undefined)
@@ -100,9 +118,9 @@ export default new Vuex.Store({
             inspection.inspection.location.zip_code = data[4];
             inspection.inspection.location.city = data[5];
             inspection.inspection.execution_date = data[6];
-            await context.commit('UPDATE_INSPECTION', inspection);
+            context.commit('UPDATE_INSPECTION', inspection);
             
-            context.dispatch('setExecutedAndAssigned')
+            
             return true;
         },
         changeDamageDetails(context, data) {
@@ -137,6 +155,18 @@ export default new Vuex.Store({
                 return false;
             inspection.damages.splice(inspection.damages.indexOf(damage), 1)
             context.commit('UPDATE_INSPECTION', inspection)
+        },
+        showSnackbarSucces(context, data = 'Success') {
+            context.commit('SHOW_SNACKBAR', [data, 'teal accent-4']);
+            setTimeout(() => {
+                context.commit('HIDE_SNACKBAR')
+            }, 2000);
+        },
+        showSnackbarFailed(context, data = 'Failed') {
+            context.commit('SHOW_SNACKBAR', [data, 'orange accent-4']);
+            setTimeout(() => {
+                context.commit('HIDE_SNACKBAR')
+            }, 2000);
         }
     }
 })

@@ -40,9 +40,7 @@
                   ><v-col cols="12" sm="6" md="4">
                     <v-text-field
                       disabled
-                      :value="
-                        this.inspection.inspection.deadline_date
-                      "
+                      :value="this.inspection.inspection.deadline_date"
                       label="Deadline date"
                     ></v-text-field>
                   </v-col>
@@ -60,8 +58,8 @@
                       label="Number*"
                       :rules="rules.text"
                       required
-                    ></v-text-field> </v-col
-                  >
+                    ></v-text-field>
+                  </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       v-model="number_addition"
@@ -93,10 +91,12 @@
                         <v-text-field
                           v-model="execution_date"
                           label="Execution date"
+                          prepend-icon="clear"
                           append-icon="mdi-calendar"
                           readonly
                           v-bind="attrs"
                           v-on="on"
+                          v-on:click:prepend="removeDate"
                           v-on:click:append="modal = true"
                         ></v-text-field>
                       </template>
@@ -128,7 +128,12 @@
               >
                 Cancel
               </v-btn>
-              <v-btn :disabled="!inspectionValid" color="blue darken-1" text @click="saveInspection">
+              <v-btn
+                :disabled="!inspectionValid"
+                color="blue darken-1"
+                text
+                @click="saveInspection"
+              >
                 Save
               </v-btn>
             </v-card-actions>
@@ -158,14 +163,14 @@ export default {
       city: this.inspection.inspection.location.city,
       zip_code: this.inspection.inspection.location.zip_code,
       execution_date: this.inspection.inspection.execution_date,
-        rules: {
-          text: [val => (val || '').length > 0 || 'This field is required'],
-        }
+      rules: {
+        text: [(val) => (val || "").length > 0 || "This field is required"],
+      },
     };
   },
   methods: {
-    async saveInspection() {
-      await this.$store
+    saveInspection() {
+      this.$store
         .dispatch("changeInspectionDetails", [
           this.inspection.id,
           this.street,
@@ -175,31 +180,22 @@ export default {
           this.city,
           this.execution_date,
         ])
-        .then(
-          (response) => {
-            console.log(response);
-            if (response === true) {
-              
-              if(!this.initialExecutionDate && this.execution_date){
-                this.$router.push('completed')
-              }
-              this.inspectionDialog = false;
-              this.$emit('saved', 'success');
-            }
-            else
-              this.$emit('saved', 'failed');
-          },
-          (error) => {
-            console.log(error);
+        .then((response) => {
+          if (response === true) {
+            if (!this.initialExecutionDate && this.execution_date)
+              this.$router.push("completed");
+            this.inspectionDialog = false;
           }
-        );
+        });
     },
-  },
-   computed:{
-    inspectionValid(){
-      return this.street && this.number && this.zip_code && this.city
+    removeDate(){
+      this.execution_date = ''
     }
   },
-  
+  computed: {
+    inspectionValid() {
+      return this.street && this.number && this.zip_code && this.city;
+    },
+  },
 };
 </script>

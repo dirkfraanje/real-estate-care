@@ -1,16 +1,5 @@
 <template>
-  <v-card class="mx-auto"
-    ><v-snackbar
-      v-model="snackbar"
-      :timeout="2500"
-      top
-      elevation="20"
-      rounded
-      class="ml-5"
-      :color="snackbarcolor"
-    >
-      <h3 class="ml-2">{{ snackbartext }}</h3>
-    </v-snackbar>
+  <v-card class="mx-auto">
     <ToolbarHeader text="Executed inspections" />
     <v-expansion-panels>
       <v-expansion-panel
@@ -29,11 +18,8 @@
           </div></v-expansion-panel-header
         >
         <v-expansion-panel-content>
-          <InspectionDetails
-            :inspection="inspection"
-            @saved="saved"
-          />
-          <DamagesList :inspection="inspection" @saved="saved"/>
+          <InspectionDetails :inspection="inspection" />
+          <DamagesList :inspection="inspection"/>
           <DeferedMaintenanceList :inspection="inspection" />
           <TechnicalInstallationList :inspection="inspection" />
           <DocumentedModificationsList :inspection="inspection" />
@@ -52,13 +38,6 @@ import DocumentedModificationsList from "@/components/Lists/DocumentedModificati
 import InventoriedModificationsList from "@/components/Lists/InventoriedModificationsList.vue";
 import ToolbarHeader from "@/components/ToolbarHeader.vue";
 export default {
-  data() {
-    return {
-      snackbar: false,
-      snackbartext: '',
-      snackbarcolor: 'teal accent-4'
-    };
-  },
   components: {
     InspectionDetails,
     DamagesList,
@@ -67,19 +46,6 @@ export default {
     DocumentedModificationsList,
     InventoriedModificationsList,
     ToolbarHeader,
-  },
-  methods:{
-    saved(message){
-      if(message === 'success'){
-        this.snackbartext = 'Saved..'
-        this.snackbarcolor = 'teal accent-4';
-      }else{
-        this.snackbarcolor = 'orange accent-4';
-        this.snackbartext = 'Save failed..'
-      }
-      this.snackbar = true;
-      
-    }
   }
 };
 </script>

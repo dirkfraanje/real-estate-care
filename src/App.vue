@@ -4,8 +4,14 @@
       <TopNavigation v-if="!isLoginView" />
     </div>
     <v-main>
-      <router-view />
-    </v-main>
+      <v-snackbar
+        top
+        :color="this.$store.state.snackbarcolor"
+        :value="showMainSnackbar"
+        >{{ mainSnackbarText }}
+      </v-snackbar>
+      <router-view /> </v-main
+    >
     <BottomNavigation v-if="!isLoginView" />
   </v-app>
 </template>
@@ -25,6 +31,12 @@ export default {
     isLoginView() {
       return this.$route.name === "login";
     },
+    showMainSnackbar() {
+      return this.$store.state.showMainSnackbar;
+    },
+    mainSnackbarText() {
+      return this.$store.state.mainSnackbarText;
+    },
   },
   created() {
     this.$store.dispatch("fetchInspections");
@@ -35,6 +47,14 @@ export default {
       localStorage.setItem("username", "demo");
       localStorage.setItem("password", "password");
     }
+  },
+  methods: {
+    showSnackbarSucces() {
+      this.$store.dispatch("showSnackbarSucces");
+    },
+    showSnackbarFailed() {
+      this.$store.dispatch("showSnackbarFailed");
+    },
   },
 };
 </script>
