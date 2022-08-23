@@ -120,7 +120,6 @@ export default new Vuex.Store({
             inspection.inspection.execution_date = data[6];
             context.commit('UPDATE_INSPECTION', inspection);
             
-            
             return true;
         },
         changeDamageDetails(context, data) {
