@@ -31,7 +31,8 @@ export default {
       deferredMaintenanceType: ['Painting', 'Wood rot', 'Electricity', 'Plumbing', 'Glazing'],
       deferredCostIndication: ['0-500', '500-1500', '1500+'],
       technicalInstallationType: ['Cooling', 'Heating', 'Air conditioning', 'Electricity', 'Security'],
-      modificationPerformedBy: ['Tenant', 'Contractor', 'Unknown']
+      modificationPerformedBy: ['Tenant', 'Contractor', 'Unknown'],
+      modificationAction: ['Accept', 'Have it inspected', 'Have it removed', 'Have it adjusted and approved']
     }
   }
 }

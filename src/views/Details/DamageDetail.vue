@@ -146,17 +146,7 @@ export default {
           this.acute_action_required,
           this.date,
           this.photo,
-        ])
-        .then(
-          (response) => {
-            //TODO: Snackbar!
-            if (response === true) this.$emit("saved", "success");
-            else this.$emit("saved", "failed");
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+        ]);
       this.$router.back();
     },
     deleteDamage() {
@@ -166,6 +156,7 @@ export default {
     },
   },
   created() {
+    console.log(this.$route.params.damage)
     this.inspectionid = this.$route.params.damage.inspectionId;
     this.id = this.$route.params.damage.id;
     this.location = this.$route.params.damage.location;

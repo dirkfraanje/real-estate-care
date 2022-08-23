@@ -3,7 +3,7 @@
     <v-container>
       <v-row class="mt-2" justify="space-around"
         ><v-btn @click="$router.go(-1)"> Cancel </v-btn>
-        <v-btn :disabled="!valid" @click="saveMaintenance" color="primary"
+        <v-btn :disabled="!valid" @click="saveInstallation" color="primary"
           >Save</v-btn
         >
         <div class="text-center">
@@ -13,21 +13,17 @@
                 Delete
               </v-btn>
             </template>
-
             <v-card>
               <v-card-title class="text-h6"> Confirm deletion </v-card-title>
-
               <v-card-text>
-                Are you sure you want to delete this maintenance?
+                Are you sure you want to delete this installation?
               </v-card-text>
-
               <v-divider></v-divider>
-
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" text @click="deletedialog = false">
                   Cancel </v-btn
-                ><v-btn color="error" text @click="deleteMaintenance">
+                ><v-btn color="error" text @click="deleteInstallation">
                   Delete
                 </v-btn>
               </v-card-actions>
@@ -45,50 +41,36 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6" md="4">
+          <v-select
+            :items="technicalInstallationType"
+            label="Type*"
+            v-model="installation_type"
+            :rules="rules.textRequired"
+            required
+          ></v-select>
+        </v-col>
+        <v-col cols="12" sm="6" md="4">
           <v-text-field
-            v-model="description"
-            label="Description*"
+            v-model="reported_malfunctions"
+            label="Reported malfunctions*"
             :rules="rules.textRequired"
             required
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6" md="4">
-          <v-select
-            :items="deferredMaintenanceType"
-            label="Type"
-            v-model="type_of_maintenance"
-            :rules="rules.textRequired"
-            required
-          ></v-select>
+          <v-text-field
+            v-model="test_procedure"
+            label="Test procedure"
+          ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6" md="4">
-          <v-select
-            :items="deferredCostIndication"
-            label="Cost indication"
-            v-model="cost_indication"
-            :rules="rules.textRequired"
-            required
-          ></v-select>
+          <v-switch v-model="approved" label="Approved"> </v-switch>
         </v-col>
         <v-col cols="12" sm="6" md="4">
-          <v-switch
-            v-model="acute_action_required"
-            label="Acute action required"
-          >
-          </v-switch>
-        </v-col>
-        <v-col cols="12" sm="6" md="4">
-          <v-file-input
-            hide-input
-            color="teal"
-            prepend-icon="mdi-camera"
-            accept="image/png, image/jpg, image/jpeg, image/bmp"
-            @change="photoSelected"
-          ></v-file-input>
-        </v-col>
-        <v-col cols="12" sm="6" md="4"
-          ><v-img :src="photo" max-width="500" max-height="300" id="im">
-          </v-img>
+          <v-text-field
+            v-model="remarks"
+            label="Remarks"
+          ></v-text-field>
         </v-col>
       </v-row>
     </v-container>
@@ -98,14 +80,13 @@
 <script>
 import mixins from "@/mixins/mixins";
 export default {
-  name: "MaintenanceDetail",
+  name: "InstallationDetail",
   mixins: [mixins],
 
   data() {
     return {
       deletedialog: false,
       valid: true,
-      photo: null,
       rules: {
         textRequired: [
           (val) => (val || "").length > 0 || "This field is required",
@@ -117,38 +98,35 @@ export default {
     validate() {
       this.$refs.form.validate();
     },
-    saveMaintenance() {
-      this.$store.dispatch("changeMaintenanceDetails", [
+    saveInstallation() {
+      this.$store.dispatch("changeInstallationDetails", [
         this.inspectionid,
         this.id,
         this.location,
-        this.description,
-        this.type_of_maintenance,
-        this.cost_indication,
-        this.acute_action_required,
-        this.photo,
+        this.installation_type,
+        this.reported_malfunctions,
+        this.test_procedure,
+        this.approved,
+        this.remarks,
       ]);
       this.$router.back();
     },
-    deleteMaintenance() {
-      this.$store.dispatch("deleteMaintenance", [this.inspectionid, this.id]);
+    deleteInstallation() {
+      this.$store.dispatch("deleteTechnicalInstallation", [this.inspectionid, this.id]);
       this.deletedialog = false;
       this.$router.back();
     },
   },
   created() {
-    this.inspectionid = this.$route.params.maintenance.inspectionId;
-    this.id = this.$route.params.maintenance.id;
-    this.location = this.$route.params.maintenance.location;
-    this.description = this.$route.params.maintenance.description;
-    this.type_of_maintenance =
-      this.$route.params.maintenance.type_of_maintenance;
-    this.cost_indication = this.$route.params.maintenance.cost_indication;
-    this.acute_action_required =
-      this.$route.params.maintenance.acute_action_required;
-    this.photo = localStorage.getItem(
-      `maintenancephoto-${this.inspectionid}-${this.id}`
-    );
+    this.inspectionid = this.$route.params.installation.inspectionId;
+    this.id = this.$route.params.installation.id;
+    this.location = this.$route.params.installation.location;
+    this.installation_type = this.$route.params.installation.installation_type;
+    this.reported_malfunctions =
+      this.$route.params.installation.reported_malfunctions;
+    this.test_procedure = this.$route.params.installation.test_procedure;
+    this.approved = this.$route.params.installation.approved;
+    this.remarks = this.$route.params.installation.remarks;
   },
 };
 </script>

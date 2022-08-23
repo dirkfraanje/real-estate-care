@@ -1,9 +1,11 @@
 <template>
   <v-card class="mb-2" elevation="2">
     <v-list>
-      <v-subheader>TECHNICAL INSTALLATIONS</v-subheader>
+      <v-subheader>TECHNICAL INSTALLATIONS<v-spacer></v-spacer
+        ><v-btn icon @click="newInstallation" ><v-icon color="teal">add</v-icon></v-btn></v-subheader
+      >
       <v-list-item
-        v-for="(item, i) in inspection.technical_installations"
+        v-for="(installation, i) in inspection.technical_installations"
         :key="i"
       >
         <v-list-item-icon>
@@ -11,20 +13,12 @@
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title
-            v-text="item.reported_malfunctions"
+            v-text="installation.reported_malfunctions"
           ></v-list-item-title>
         </v-list-item-content>
-        <v-btn
-          icon
-          @click="
-            $router.push({
-              name: 'TechnicalInstallationEdit',
-              params: { id: inspection.inspection.id },
-            })
-          "
-        >
-          <v-icon color="teal lighten-1">edit</v-icon>
-        </v-btn>
+        <v-btn icon :to="{ name: 'installationdetail', params: { installation: installation } }"
+            ><v-icon color="teal lighten-1">edit</v-icon></v-btn
+          >
       </v-list-item>
     </v-list>
   </v-card>
@@ -32,13 +26,19 @@
 
 
 <script>
+import Installation from '@/store/Classes/TechnicalInstallation'
 export default {
-  name: "TechnicalInstallations",
+  name: "TechnicalInstallationList",
   props: {
     inspection: {
       type: Object,
       required: true,
     },
   },
+  methods:{
+    newInstallation(){
+      this.$router.push({name: 'installationdetail', params:{ installation: new Installation(null, this.inspection.id, null)}})
+    }
+  }
 };
 </script>

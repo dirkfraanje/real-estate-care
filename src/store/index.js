@@ -3,7 +3,11 @@ import Vuex from 'vuex';
 import Inspection from './Classes/Inspection';
 import Damage from './Classes/Damage'
 import Maintenance from './Classes/DeferedMaintenance'
+import TechnicalInstallation from './Classes/TechnicalInstallation';
+import Modification from './Classes/Modification';
+
 import Notification from './Classes/Notification';
+
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
@@ -107,6 +111,8 @@ export default new Vuex.Store({
             //Reload notifications
             this.state.notifications.splice(this.state.notifications.indexOf(notification), 1)
         },
+
+        //Change actions
         changeInspectionDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
@@ -146,11 +152,10 @@ export default new Vuex.Store({
         changeMaintenanceDetails(context, data){
             let inspectionId = data[0];
             let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
-            alert(inspection)
             let maintenance = inspection.deferred_maintenance.find(maintenance => maintenance.id === data[1])
             
             if (maintenance === undefined) {
-                //If the damage is not found then this is a new damage
+                //If the maintenance is not found then this is a new maintenance
                 maintenance = new Maintenance(null, inspectionId, `${inspection.deferred_maintenance.length !== 0 ? Math.max(...inspection.deferred_maintenance.map(o => o.id)) + 1 : 1}`)
                 inspection.deferred_maintenance.push(maintenance);
             }
@@ -165,6 +170,70 @@ export default new Vuex.Store({
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
         },
+        changeInstallationDetails(context, data){
+            let inspectionId = data[0];
+            let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
+            let installation = inspection.technical_installations.find(installation => installation.id === data[1])
+            
+            if (installation === undefined) {
+                //If the installation is not found then this is a new installation
+                installation = new TechnicalInstallation(null, inspectionId, `${inspection.technical_installations.length !== 0 ? Math.max(...inspection.technical_installations.map(o => o.id)) + 1 : 1}`)
+                inspection.technical_installations.push(installation);
+            }
+
+            installation.location = data[2]
+            installation.installation_type = data[3]
+            installation.reported_malfunctions = data[4]
+            installation.test_procedure = data[5]
+            installation.approved = data[6]
+            installation.remarks = data[7]
+
+            context.commit('UPDATE_INSPECTION', inspection);
+            return true;
+        },
+        changeDocumentedModificationDetails(context, data){
+            let inspectionId = data[0];
+            let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
+            let modification = inspection.already_documented_modifications.find(modification => modification.id === data[1])
+            
+            if (modification === undefined) {
+                //If the installation is not found then this is a new installation
+                modification = new Modification(null, inspectionId, `${inspection.already_documented_modifications.length !== 0 ? Math.max(...inspection.already_documented_modifications.map(o => o.id)) + 1 : 1}`)
+                inspection.already_documented_modifications.push(modification);
+            }
+
+            modification.location = data[2]
+            modification.performed_by = data[3]
+            modification.description = data[4]
+            modification.action_to_take = data[5]
+            modification.remarks = data[6]
+
+            localStorage.setItem(`documentedmodificationnphoto-${inspectionId}-${modification.id}`, data[7])
+            context.commit('UPDATE_INSPECTION', inspection);
+            return true;
+        },
+        changeNewModificationDetails(context, data){
+            let inspectionId = data[0];
+            let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
+            let modification = inspection.newly_inventoried_modifications_during_inspection.find(modification => modification.id === data[1])
+            
+            if (modification === undefined) {
+                //If the installation is not found then this is a new installation
+                modification = new Modification(null, inspectionId, `${inspection.newly_inventoried_modifications_during_inspection.length !== 0 ? Math.max(...inspection.newly_inventoried_modifications_during_inspection.map(o => o.id)) + 1 : 1}`)
+                inspection.newly_inventoried_modifications_during_inspection.push(modification);
+            }
+
+            modification.location = data[2]
+            modification.performed_by = data[3]
+            modification.description = data[4]
+            modification.action_to_take = data[5]
+            modification.remarks = data[6]
+
+            localStorage.setItem(`newmodificationnphoto-${inspectionId}-${modification.id}`, data[7])
+            context.commit('UPDATE_INSPECTION', inspection);
+            return true;
+        },
+        //Delete actions
         deleteDamage(context, data) {
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
 
@@ -182,6 +251,31 @@ export default new Vuex.Store({
             inspection.deferred_maintenance.splice(inspection.deferred_maintenance.indexOf(maintenance), 1)
             context.commit('UPDATE_INSPECTION', inspection)
         },
+        deleteTechnicalInstallation(context, data) {
+            let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
+            let installation = inspection.technical_installations.find(installation => installation.id === data[1]);
+            if (installation === undefined)
+                return false;
+            inspection.technical_installations.splice(inspection.technical_installations.indexOf(installation), 1)
+            context.commit('UPDATE_INSPECTION', inspection)
+        },
+        deleteDocumentedModification(context, data) {
+            let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
+            let modification = inspection.already_documented_modifications.find(modification => modification.id === data[1]);
+            if (modification === undefined)
+                return false;
+            inspection.already_documented_modifications.splice(inspection.already_documented_modifications.indexOf(modification), 1)
+            context.commit('UPDATE_INSPECTION', inspection)
+        },
+        deleteNewModification(context, data) {
+            let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
+            let modification = inspection.newly_inventoried_modifications_during_inspection.find(modification => modification.id === data[1]);
+            if (modification === undefined)
+                return false;
+            inspection.newly_inventoried_modifications_during_inspection.splice(inspection.newly_inventoried_modifications_during_inspection.indexOf(modification), 1)
+            context.commit('UPDATE_INSPECTION', inspection)
+        },
+        //Snackbar actions
         showSnackbarSucces(context, data = 'Success') {
             context.commit('SHOW_SNACKBAR', [data, 'teal accent-4']);
             setTimeout(() => {
