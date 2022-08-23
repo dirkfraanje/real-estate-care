@@ -3,7 +3,7 @@
     <v-container>
       <v-row class="mt-2" justify="space-around"
         ><v-btn @click="$router.go(-1)"> Cancel </v-btn>
-        <v-btn :disabled="!valid" @click="saveInstallation" color="primary"
+        <v-btn :disabled="!valid" @click="saveModification" color="primary"
           >Save</v-btn
         >
         <div class="text-center">
@@ -16,14 +16,14 @@
             <v-card>
               <v-card-title class="text-h6"> Confirm deletion </v-card-title>
               <v-card-text>
-                Are you sure you want to delete this installation?
+                Are you sure you want to delete this modification?
               </v-card-text>
               <v-divider></v-divider>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" text @click="deletedialog = false">
                   Cancel </v-btn
-                ><v-btn color="error" text @click="deleteInstallation">
+                ><v-btn color="error" text @click="deleteModification">
                   Delete
                 </v-btn>
               </v-card-actions>
@@ -41,36 +41,49 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6" md="4">
+          <v-text-field
+            v-model="description"
+            label="Description*"
+            :rules="rules.textRequired"
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="6" md="4">
           <v-select
-            :items="technicalInstallationType"
-            label="Type*"
-            v-model="installation_type"
+            :items="modificationPerformedBy"
+            label="Performed by*"
+            v-model="performed_by"
+            :rules="rules.textRequired"
+            required
+          ></v-select>
+        </v-col>
+         <v-col cols="12" sm="6" md="4">
+          <v-select
+            :items="modificationAction"
+            label="Action to take*"
+            v-model="action_to_take"
             :rules="rules.textRequired"
             required
           ></v-select>
         </v-col>
         <v-col cols="12" sm="6" md="4">
           <v-text-field
-            v-model="reported_malfunctions"
-            label="Reported malfunctions*"
-            :rules="rules.textRequired"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" sm="6" md="4">
-          <v-text-field
-            v-model="test_procedure"
-            label="Test procedure"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" sm="6" md="4">
-          <v-switch v-model="approved" label="Approved"> </v-switch>
-        </v-col>
-        <v-col cols="12" sm="6" md="4">
-          <v-text-field
             v-model="remarks"
             label="Remarks"
           ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="6" md="4">
+          <v-file-input
+            hide-input
+            color="teal"
+            prepend-icon="mdi-camera"
+            accept="image/png, image/jpg, image/jpeg, image/bmp"
+            @change="photoSelected"
+          ></v-file-input>
+        </v-col>
+        <v-col cols="12" sm="6" md="4"
+          ><v-img :src="photo" max-width="500" max-height="300" id="im">
+          </v-img>
         </v-col>
       </v-row>
     </v-container>
@@ -80,13 +93,14 @@
 <script>
 import mixins from "@/mixins/mixins";
 export default {
-  name: "InstallationDetail",
+  name: "DamageDetail",
   mixins: [mixins],
-
   data() {
     return {
       deletedialog: false,
       valid: true,
+      modal: false,
+      photo: null,
       rules: {
         textRequired: [
           (val) => (val || "").length > 0 || "This field is required",
@@ -98,35 +112,37 @@ export default {
     validate() {
       this.$refs.form.validate();
     },
-    saveInstallation() {
-      this.$store.dispatch("changeInstallationDetails", [
-        this.inspectionid,
-        this.id,
-        this.location,
-        this.installation_type,
-        this.reported_malfunctions,
-        this.test_procedure,
-        this.approved,
-        this.remarks,
-      ]);
+    saveModification() {
+      this.$store
+        .dispatch("changeModificationDetails", [
+          this.inspectionid,
+          this.id,
+          this.location,
+          this.performed_by,
+          this.description,
+          this.action_to_take,
+          this.remarks,
+          this.photo    
+        ]);
       this.$router.back();
     },
-    deleteInstallation() {
-      this.$store.dispatch("deleteTechnicalInstallation", [this.inspectionid, this.id]);
+    deleteModification() {
+      this.$store.dispatch("deleteModification", [this.inspectionid, this.id]);
       this.deletedialog = false;
       this.$router.back();
     },
   },
   created() {
-    this.inspectionid = this.$route.params.installation.inspectionId;
-    this.id = this.$route.params.installation.id;
-    this.location = this.$route.params.installation.location;
-    this.installation_type = this.$route.params.installation.installation_type;
-    this.reported_malfunctions =
-      this.$route.params.installation.reported_malfunctions;
-    this.test_procedure = this.$route.params.installation.test_procedure;
-    this.approved = this.$route.params.installation.approved;
-    this.remarks = this.$route.params.installation.remarks;
+    this.inspectionid = this.$route.params.modification.inspectionId;
+    this.id = this.$route.params.modification.id;
+    this.location = this.$route.params.modification.location;
+    this.performed_by = this.$route.params.modification.performed_by;
+    this.description = this.$route.params.modification.description;
+    this.action_to_take = this.$route.params.modification.action_to_take;
+    this.remarks = this.$route.params.modification.remarks;
+    this.photo = localStorage.getItem(
+      `modificationphoto-${this.inspectionid}-${this.id}`
+    );
   },
 };
 </script>

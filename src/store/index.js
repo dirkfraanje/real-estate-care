@@ -56,13 +56,13 @@ export default new Vuex.Store({
                 body: JSON.stringify(payload)
             };
             fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/inspections/" + payload.id, requestOptions)
-                .then(res => { 
+                .then(res => {
                     if (!res.ok) {
                         res.json().then((data) => {
                             this.dispatch('showSnackbarFailed', data)
                         })
                     }
-                    else{
+                    else {
                         this.dispatch('showSnackbarSucces', 'Update inspection succeeded');
                         this.dispatch('setExecutedAndAssigned')
                     }
@@ -124,7 +124,7 @@ export default new Vuex.Store({
             inspection.inspection.location.city = data[5];
             inspection.inspection.execution_date = data[6];
             context.commit('UPDATE_INSPECTION', inspection);
-            
+
             return true;
         },
         changeDamageDetails(context, data) {
@@ -144,16 +144,16 @@ export default new Vuex.Store({
             damage.type_of_damage = data[5];
             damage.acute_action_required = data[6];
             damage.date = data[7];
-
-            localStorage.setItem(`damagephoto-${inspectionId}-${damage.id}`, data[8])
+            if (data[8] !== null)
+                localStorage.setItem(`damagephoto-${inspectionId}-${damage.id}`, data[8])
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
         },
-        changeMaintenanceDetails(context, data){
+        changeMaintenanceDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
             let maintenance = inspection.deferred_maintenance.find(maintenance => maintenance.id === data[1])
-            
+
             if (maintenance === undefined) {
                 //If the maintenance is not found then this is a new maintenance
                 maintenance = new Maintenance(null, inspectionId, `${inspection.deferred_maintenance.length !== 0 ? Math.max(...inspection.deferred_maintenance.map(o => o.id)) + 1 : 1}`)
@@ -165,16 +165,16 @@ export default new Vuex.Store({
             maintenance.type_of_maintenance = data[4];
             maintenance.cost_indication = data[5]
             maintenance.acute_action_required = data[6];
-
-            localStorage.setItem(`maintenancephoto-${inspectionId}-${maintenance.id}`, data[7])
+            if (data[7] !== null)
+                localStorage.setItem(`maintenancephoto-${inspectionId}-${maintenance.id}`, data[7])
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
         },
-        changeInstallationDetails(context, data){
+        changeInstallationDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
             let installation = inspection.technical_installations.find(installation => installation.id === data[1])
-            
+
             if (installation === undefined) {
                 //If the installation is not found then this is a new installation
                 installation = new TechnicalInstallation(null, inspectionId, `${inspection.technical_installations.length !== 0 ? Math.max(...inspection.technical_installations.map(o => o.id)) + 1 : 1}`)
@@ -187,20 +187,20 @@ export default new Vuex.Store({
             installation.test_procedure = data[5]
             installation.approved = data[6]
             installation.remarks = data[7]
-
-            localStorage.setItem(`installationphoto-${inspectionId}-${installation.id}`, data[7])
+            if (data[8] !== null)
+                localStorage.setItem(`installationphoto-${inspectionId}-${installation.id}`, data[8])
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
         },
-        changeDocumentedModificationDetails(context, data){
+        changeModificationDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
-            let modification = inspection.already_documented_modifications.find(modification => modification.id === data[1])
-            
+            let modification = inspection.modifications.find(modification => modification.id === data[1])
+
             if (modification === undefined) {
                 //If the installation is not found then this is a new installation
-                modification = new Modification(null, inspectionId, `${inspection.already_documented_modifications.length !== 0 ? Math.max(...inspection.already_documented_modifications.map(o => o.id)) + 1 : 1}`)
-                inspection.already_documented_modifications.push(modification);
+                modification = new Modification(null, inspectionId, `${inspection.modifications.length !== 0 ? Math.max(...inspection.modifications.map(o => o.id)) + 1 : 1}`)
+                inspection.modifications.push(modification);
             }
 
             modification.location = data[2]
@@ -208,29 +208,8 @@ export default new Vuex.Store({
             modification.description = data[4]
             modification.action_to_take = data[5]
             modification.remarks = data[6]
-
-            localStorage.setItem(`documentedmodificationnphoto-${inspectionId}-${modification.id}`, data[7])
-            context.commit('UPDATE_INSPECTION', inspection);
-            return true;
-        },
-        changeNewModificationDetails(context, data){
-            let inspectionId = data[0];
-            let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
-            let modification = inspection.newly_inventoried_modifications_during_inspection.find(modification => modification.id === data[1])
-            
-            if (modification === undefined) {
-                //If the installation is not found then this is a new installation
-                modification = new Modification(null, inspectionId, `${inspection.newly_inventoried_modifications_during_inspection.length !== 0 ? Math.max(...inspection.newly_inventoried_modifications_during_inspection.map(o => o.id)) + 1 : 1}`)
-                inspection.newly_inventoried_modifications_during_inspection.push(modification);
-            }
-
-            modification.location = data[2]
-            modification.performed_by = data[3]
-            modification.description = data[4]
-            modification.action_to_take = data[5]
-            modification.remarks = data[6]
-
-            localStorage.setItem(`newmodificationnphoto-${inspectionId}-${modification.id}`, data[7])
+            if (data[7] !== null)
+                localStorage.setItem(`modificationphoto-${inspectionId}-${modification.id}`, data[7])
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
         },
@@ -263,21 +242,14 @@ export default new Vuex.Store({
             context.commit('UPDATE_INSPECTION', inspection)
             localStorage.removeItem(`installationphoto-${inspection.id}-${installation.id}`)
         },
-        deleteDocumentedModification(context, data) {
+        deleteModification(context, data) {
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
-            let modification = inspection.already_documented_modifications.find(modification => modification.id === data[1]);
+            let modification = inspection.modifications.find(modification => modification.id === data[1]);
             if (modification === undefined)
                 return false;
-            inspection.already_documented_modifications.splice(inspection.already_documented_modifications.indexOf(modification), 1)
+            inspection.modifications.splice(inspection.modifications.indexOf(modification), 1)
             context.commit('UPDATE_INSPECTION', inspection)
-        },
-        deleteNewModification(context, data) {
-            let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
-            let modification = inspection.newly_inventoried_modifications_during_inspection.find(modification => modification.id === data[1]);
-            if (modification === undefined)
-                return false;
-            inspection.newly_inventoried_modifications_during_inspection.splice(inspection.newly_inventoried_modifications_during_inspection.indexOf(modification), 1)
-            context.commit('UPDATE_INSPECTION', inspection)
+            localStorage.removeItem(`modificationphoto-${inspection.id}-${modification.id}`)
         },
         //Snackbar actions
         showSnackbarSucces(context, data = 'Success') {

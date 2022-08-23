@@ -51,7 +51,7 @@
         <v-col cols="12" sm="6" md="4">
           <v-select
             :items="damageType"
-            label="Type"
+            label="Type*"
             v-model="type_of_damage"
             :rules="rules.textRequired"
             required
@@ -71,14 +71,14 @@
           <v-dialog ref="dialog" v-model="modal" persistent width="290px">
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                :rules="rules.textRequired"
-                required
                 v-model="date"
                 label="Date"
+                prepend-icon="clear"
                 append-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
                 v-on="on"
+                v-on:click:prepend="removeDate"
                 v-on:click:append="modal = true"
               ></v-text-field>
             </template>
@@ -134,19 +134,21 @@ export default {
     validate() {
       this.$refs.form.validate();
     },
+    removeDate() {
+      this.execution_date = "";
+    },
     saveDamage() {
-      this.$store
-        .dispatch("changeDamageDetails", [
-          this.inspectionid,
-          this.id,
-          this.location,
-          this.description,
-          this.new_damage,
-          this.type_of_damage,
-          this.acute_action_required,
-          this.date,
-          this.photo,
-        ]);
+      this.$store.dispatch("changeDamageDetails", [
+        this.inspectionid,
+        this.id,
+        this.location,
+        this.description,
+        this.new_damage,
+        this.type_of_damage,
+        this.acute_action_required,
+        this.date,
+        this.photo,
+      ]);
       this.$router.back();
     },
     deleteDamage() {
@@ -156,7 +158,6 @@ export default {
     },
   },
   created() {
-    console.log(this.$route.params.damage)
     this.inspectionid = this.$route.params.damage.inspectionId;
     this.id = this.$route.params.damage.id;
     this.location = this.$route.params.damage.location;
@@ -167,8 +168,10 @@ export default {
       this.$route.params.damage.acute_action_required;
     this.date = this.$route.params.damage.date;
     this.photo = localStorage.getItem(
-      `damagephoto-${this.inspectionid}-${this.id}`
-    );
+        `damagephoto-${this.inspectionid}-${this.id}`
+      );
+    
+      
   },
 };
 </script>

@@ -24,12 +24,8 @@ export default class Inspection {
         this.technical_installations = jsonInspection.technical_installations.map(
             installation => new TechnicalInstallation(installation, this.id, null)
         );
-        //Already documented modifications
-        this.already_documented_modifications = jsonInspection.already_documented_modifications.map(
-            modification => new Modification(modification, this.id, null)
-        );
-        //Newly inventoried modifications during inspection
-        this.newly_inventoried_modifications_during_inspection = jsonInspection.newly_inventoried_modifications_during_inspection.map(
+        //Modifications
+        this.modifications = jsonInspection.modifications.map(
             modification => new Modification(modification, this.id, null)
         );
     }

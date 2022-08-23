@@ -55,7 +55,7 @@
         <v-col cols="12" sm="6" md="4">
           <v-select
             :items="deferredMaintenanceType"
-            label="Type"
+            label="Type*"
             v-model="type_of_maintenance"
             :rules="rules.textRequired"
             required
@@ -64,7 +64,7 @@
         <v-col cols="12" sm="6" md="4">
           <v-select
             :items="deferredCostIndication"
-            label="Cost indication"
+            label="Cost indication*"
             v-model="cost_indication"
             :rules="rules.textRequired"
             required
