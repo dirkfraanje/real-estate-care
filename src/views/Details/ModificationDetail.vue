@@ -67,20 +67,10 @@
           <v-switch v-model="approved" label="Approved"> </v-switch>
         </v-col>
         <v-col cols="12" sm="6" md="4">
-          <v-text-field v-model="remarks" label="Remarks"></v-text-field>
-        </v-col>
-        <v-col cols="12" sm="6" md="4">
-          <v-file-input
-            hide-input
-            color="teal"
-            prepend-icon="mdi-camera"
-            accept="image/png, image/jpg, image/jpeg, image/bmp"
-            @change="photoSelected"
-          ></v-file-input>
-        </v-col>
-        <v-col cols="12" sm="6" md="4"
-          ><v-img :src="photo" max-width="500" max-height="300" id="im">
-          </v-img>
+          <v-text-field
+            v-model="remarks"
+            label="Remarks"
+          ></v-text-field>
         </v-col>
       </v-row>
     </v-container>
@@ -97,7 +87,6 @@ export default {
     return {
       deletedialog: false,
       valid: true,
-      photo: null,
       rules: {
         textRequired: [
           (val) => (val || "").length > 0 || "This field is required",
@@ -119,15 +108,11 @@ export default {
         this.test_procedure,
         this.approved,
         this.remarks,
-        this.photo,
       ]);
       this.$router.back();
     },
     deleteInstallation() {
-      this.$store.dispatch("deleteTechnicalInstallation", [
-        this.inspectionid,
-        this.id,
-      ]);
+      this.$store.dispatch("deleteTechnicalInstallation", [this.inspectionid, this.id]);
       this.deletedialog = false;
       this.$router.back();
     },
@@ -142,9 +127,6 @@ export default {
     this.test_procedure = this.$route.params.installation.test_procedure;
     this.approved = this.$route.params.installation.approved;
     this.remarks = this.$route.params.installation.remarks;
-    this.photo = localStorage.getItem(
-      `installationphoto-${this.inspectionid}-${this.id}`
-    );
   },
 };
 </script>

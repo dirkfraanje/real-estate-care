@@ -188,6 +188,7 @@ export default new Vuex.Store({
             installation.approved = data[6]
             installation.remarks = data[7]
 
+            localStorage.setItem(`installationphoto-${inspectionId}-${installation.id}`, data[7])
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
         },
@@ -242,6 +243,7 @@ export default new Vuex.Store({
                 return false;
             inspection.damages.splice(inspection.damages.indexOf(damage), 1)
             context.commit('UPDATE_INSPECTION', inspection)
+            localStorage.removeItem(`damagephoto-${inspection.id}-${damage.id}`)
         },
         deleteMaintenance(context, data) {
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
@@ -250,6 +252,7 @@ export default new Vuex.Store({
                 return false;
             inspection.deferred_maintenance.splice(inspection.deferred_maintenance.indexOf(maintenance), 1)
             context.commit('UPDATE_INSPECTION', inspection)
+            localStorage.removeItem(`maintenancephoto-${inspection.id}-${maintenance.id}`)
         },
         deleteTechnicalInstallation(context, data) {
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
@@ -258,6 +261,7 @@ export default new Vuex.Store({
                 return false;
             inspection.technical_installations.splice(inspection.technical_installations.indexOf(installation), 1)
             context.commit('UPDATE_INSPECTION', inspection)
+            localStorage.removeItem(`installationphoto-${inspection.id}-${installation.id}`)
         },
         deleteDocumentedModification(context, data) {
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
