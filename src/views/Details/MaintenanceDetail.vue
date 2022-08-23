@@ -119,29 +119,28 @@ export default {
       this.$refs.form.validate();
     },
     saveMaintenance() {
-      alert('Function not available yet')
-      return;
-      // this.$store
-      //   .dispatch("changeMaintenanceDetails", [
-      //     this.inspectionid,
-      //     this.id,
-      //     this.location,
-      //     this.description,
-      //     this.type_of_maintenance,
-      //     this.cost_indication,
-      //     this.acute_action_required
-      //   ])
-      //   .then(
-      //     (response) => {
-      //       //TODO: Snackbar!
-      //       if (response === true) this.$emit("saved", "success");
-      //       else this.$emit("saved", "failed");
-      //     },
-      //     (error) => {
-      //       console.log(error);
-      //     }
-      //   );
-      // this.$router.back();
+      this.$store
+        .dispatch("changeMaintenanceDetails", [
+          this.inspectionid,
+          this.id,
+          this.location,
+          this.description,
+          this.type_of_maintenance,
+          this.cost_indication,
+          this.acute_action_required,
+          this.photo
+        ])
+        .then(
+          (response) => {
+            //TODO: Snackbar!
+            if (response === true) this.$emit("saved", "success");
+            else this.$emit("saved", "failed");
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      this.$router.back();
     },
     deleteMaintenance() {
       this.$store.dispatch("deleteMaintenance", [this.inspectionid, this.id]);
@@ -155,7 +154,7 @@ export default {
     this.location = this.$route.params.maintenance.location;
     this.description = this.$route.params.maintenance.description;
     this.type_of_maintenance = this.$route.params.maintenance.type_of_maintenance;
-    this.cost_indication = this.$route.params.cost_indication;
+    this.cost_indication = this.$route.params.maintenance.cost_indication;
     this.acute_action_required =
       this.$route.params.maintenance.acute_action_required;
     this.photo = localStorage.getItem(

@@ -18,19 +18,19 @@ export default class Inspection {
         );
         //Defered maintenance
         this.deferred_maintenance = jsonInspection.deferred_maintenance.map(
-            maintenance => new DeferedMaintenance(maintenance)
+            maintenance => new DeferedMaintenance(maintenance, this.id, null)
         );
         //Technical installations
         this.technical_installations = jsonInspection.technical_installations.map(
-            installation => new TechnicalInstallation(installation)
+            installation => new TechnicalInstallation(installation, this.id, null)
         );
         //Already documented modifications
         this.already_documented_modifications = jsonInspection.already_documented_modifications.map(
-            modification => new Modification(modification)
+            modification => new Modification(modification, this.id, null)
         );
         //Newly inventoried modifications during inspection
         this.newly_inventoried_modifications_during_inspection = jsonInspection.newly_inventoried_modifications_during_inspection.map(
-            modification => new Modification(modification)
+            modification => new Modification(modification, this.id, null)
         );
     }
 }

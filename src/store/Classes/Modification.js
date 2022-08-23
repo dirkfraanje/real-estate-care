@@ -1,5 +1,10 @@
 export default class Modification {
-    constructor(jsonModification) {
-        Object.assign(this, jsonModification);
+    constructor(jsonModification, inspectionId, newid) {
+        if (jsonModification)
+            Object.assign(this, jsonModification);
+        this.inspectionId = inspectionId;
+        if (newid)
+            this.id = newid
     }
 }
+

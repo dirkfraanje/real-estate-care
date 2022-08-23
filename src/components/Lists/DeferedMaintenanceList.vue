@@ -34,7 +34,7 @@ export default {
   },
   methods:{
     newDeferredMaintenance(){
-      this.$router.push({name: 'maintenancedetail', params:{ damage: new Maintenance(null, this.inspection.id, null)}})
+      this.$router.push({name: 'maintenancedetail', params:{ maintenance: new Maintenance(null, this.inspection.id, null)}})
     }
   }
 };

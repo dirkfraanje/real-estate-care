@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Inspection from './Classes/Inspection';
 import Damage from './Classes/Damage'
+import Maintenance from './Classes/DeferedMaintenance'
 import Notification from './Classes/Notification';
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -109,8 +110,6 @@ export default new Vuex.Store({
         changeInspectionDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
-            if (inspection === undefined)
-                return false;
 
             inspection.inspection.location.street = data[1];
             inspection.inspection.location.number = data[2];
@@ -125,8 +124,7 @@ export default new Vuex.Store({
         changeDamageDetails(context, data) {
             let inspectionId = data[0];
             let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
-            if (inspection === undefined)
-                return false;
+
             let damage = inspection.damages.find(damage => damage.id === data[1])
             if (damage === undefined) {
                 //If the damage is not found then this is a new damage
@@ -145,14 +143,43 @@ export default new Vuex.Store({
             context.commit('UPDATE_INSPECTION', inspection);
             return true;
         },
+        changeMaintenanceDetails(context, data){
+            let inspectionId = data[0];
+            let inspection = this.state.all_inspections.find(inspection => inspection.id === inspectionId)
+            alert(inspection)
+            let maintenance = inspection.deferred_maintenance.find(maintenance => maintenance.id === data[1])
+            
+            if (maintenance === undefined) {
+                //If the damage is not found then this is a new damage
+                maintenance = new Maintenance(null, inspectionId, `${inspection.deferred_maintenance.length !== 0 ? Math.max(...inspection.deferred_maintenance.map(o => o.id)) + 1 : 1}`)
+                inspection.deferred_maintenance.push(maintenance);
+            }
+
+            maintenance.location = data[2]
+            maintenance.description = data[3];
+            maintenance.type_of_maintenance = data[4];
+            maintenance.cost_indication = data[5]
+            maintenance.acute_action_required = data[6];
+
+            localStorage.setItem(`maintenancephoto-${inspectionId}-${maintenance.id}`, data[7])
+            context.commit('UPDATE_INSPECTION', inspection);
+            return true;
+        },
         deleteDamage(context, data) {
             let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
-            if (inspection === undefined)
-                return false;
+
             let damage = inspection.damages.find(damage => damage.id === data[1]);
             if (damage === undefined)
                 return false;
             inspection.damages.splice(inspection.damages.indexOf(damage), 1)
+            context.commit('UPDATE_INSPECTION', inspection)
+        },
+        deleteMaintenance(context, data) {
+            let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
+            let maintenance = inspection.deferred_maintenance.find(maintenance => maintenance.id === data[1]);
+            if (maintenance === undefined)
+                return false;
+            inspection.deferred_maintenance.splice(inspection.deferred_maintenance.indexOf(maintenance), 1)
             context.commit('UPDATE_INSPECTION', inspection)
         },
         showSnackbarSucces(context, data = 'Success') {
