@@ -50,15 +50,18 @@
         </v-col></v-row>
     </v-container>
   </v-form>
+  <InstallPWA />
   </v-app>
 </template>
 
 <script>
 import RealEstateCareLogo from '@/components/RealEstateCareLogo.vue'
+import InstallPWA from '@/components/InstallPWA.vue'
 export default {
   name: "App",
   components: {
-    RealEstateCareLogo
+    RealEstateCareLogo,
+    InstallPWA
   },
   data: () => ({
     
