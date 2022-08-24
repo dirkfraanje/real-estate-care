@@ -5,6 +5,7 @@ import vuetify from './plugins/vuetify'
 import store from './store'
 import alert from "vue-simple-alert";
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 
