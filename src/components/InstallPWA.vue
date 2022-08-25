@@ -1,16 +1,16 @@
 <!-- PWAPrompt.vue -->
 <template>
-  <div v-if="shown">
+  <v-container class="grey lighten-5">
     Add app to home screen?
 
-    <button @click="installPWA">
+    <v-btn @click="installPWA">
       Install!
-    </button>
+    </v-btn>
 
-    <button @click="dismissPrompt">
+    <v-btn @click="dismissPrompt">
       No, thanks
-    </button>
-  </div>
+    </v-btn>
+  </v-container>
 </template>
 
 <script>

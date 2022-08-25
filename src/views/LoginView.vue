@@ -1,6 +1,6 @@
 <template>
   <v-app
-    ><v-form>
+    ><InstallPWA /><v-form>
     <v-container fluid><v-row class="justify-center mt-1 mb-1">
       <RealEstateCareLogo /></v-row>
       <v-row class="justify-center" >
@@ -50,7 +50,6 @@
         </v-col></v-row>
     </v-container>
   </v-form>
-  <InstallPWA />
   </v-app>
 </template>
 
@@ -84,6 +83,16 @@ export default {
         this.$router.push('/');
       }
     }
+  },
+  beforeMount() {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault()
+      this.installEvent = e
+      this.shown = true
+    })
+  },
+  mounted(){
+    this.installEvent.prompt()
   }
 };
 </script>
