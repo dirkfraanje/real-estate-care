@@ -1,7 +1,7 @@
 <template>
 <v-toolbar dark class="primary">
-      <v-toolbar-title class="ml-2">{{ this.text }}</v-toolbar-title>
-      <v-spacer></v-spacer>
+    <v-btn @click="$router.go(-1)" icon><v-icon>arrow_back</v-icon></v-btn>
+      <v-toolbar-title>{{ this.text }}</v-toolbar-title>
     </v-toolbar>
 </template>
 <script>

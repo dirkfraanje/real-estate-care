@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar dense dark height="60">
-      <div>
+      <div @click="$router.replace('/')">
         <v-img
           :src="require('../assets/logo_rec.svg')"
           contain
@@ -9,7 +9,7 @@
           width="40"
         />
       </div>
-      <v-toolbar-title>
+      <v-toolbar-title @click="$router.replace('/')">
         <div class="pa-2">
           <p class="mb-n2 mt-4 nav-font nav-title">Real Estate Care</p>
           <p class="nav-font nav-sub-title">Caring is in our nature</p>
