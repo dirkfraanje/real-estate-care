@@ -6,6 +6,5 @@ module.exports = defineConfig({
   pwa: {
     name: "Real Estate Care",
     themeColor: "#008080"
-  },
-  baseUrl: "./login"
+  }
 })

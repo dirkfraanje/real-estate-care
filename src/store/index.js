@@ -40,7 +40,11 @@ export default new Vuex.Store({
             state.assigned_count = state.assigned_inspections.length;
         },
         SET_NOTIFICATIONS(state, payload) {
-            state.notifications = payload;
+            localStorage.setItem('offline_notifications', JSON.stringify(payload));
+            state.notifications = JSON.parse(localStorage.offline_notifications);
+        },
+        SET_OFFLINE_NOTIFICATIONS(state){
+            state.notifications = JSON.parse(localStorage.offline_notifications);
         },
         SET_AUTHENTICATION(state) {
             //For this prototype we just check for demo/password
@@ -105,7 +109,8 @@ export default new Vuex.Store({
                         notification => new Notification(notification)
                     ))
                 })
-                .catch((error) => alert(error.message));
+                .catch(() => context.commit('SET_OFFLINE_NOTIFICATIONS'));
+                
         },
         dismissNotification(context, notification) {
             //Reload notifications
