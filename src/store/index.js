@@ -72,7 +72,7 @@ export default new Vuex.Store({
                 .then(res => {
                     if (!res.ok) {
                         res.json().then((data) => {
-                            this.dispatch('showSnackbarFailed', [data, 2000])
+                            this.dispatch('showSnackbarFailed', [data, 5000])
                         })
                     }
                     else {
@@ -80,8 +80,8 @@ export default new Vuex.Store({
                         this.dispatch('setExecutedAndAssigned')
                     }
                 })
-                //When offline, CRUD operations are not available
-                .catch(() => this.dispatch('showSnackbarFailed', ['When you are offline, you can only view data', 3000]))
+                //In the prototype, when offline, CRUD operations are not available
+                .catch(() => this.dispatch('showSnackbarFailed', ['When you are offline, you can only view data', 5000]))
         }
     },
     actions: {
@@ -277,9 +277,13 @@ export default new Vuex.Store({
         },
         showSnackbarFailed(context, data = ['Failed', 2000]) {
             context.commit('SHOW_SNACKBAR', [data[0], 'orange accent-4']);
-            setTimeout(() => {
-                context.commit('HIDE_SNACKBAR')
-            }, data[1]);
+            if (data[1] > 0)
+                setTimeout(() => {
+                    context.commit('HIDE_SNACKBAR')
+                }, data[1]);
+        },
+        closeSnackbar(context) {
+            context.commit('HIDE_SNACKBAR')
         }
     }
 })

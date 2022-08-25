@@ -8,7 +8,7 @@
         top
         :color="this.$store.state.snackbarcolor"
         :value="showMainSnackbar"
-        >{{ mainSnackbarText }}
+        >{{ mainSnackbarText }} <v-btn text class="ml-2" @click="closeSnackbar">Close</v-btn>
       </v-snackbar>
       <router-view /> </v-main
     >
@@ -37,6 +37,11 @@ export default {
     mainSnackbarText() {
       return this.$store.state.mainSnackbarText;
     },
+  },
+  methods:{
+    closeSnackbar(){
+      this.$store.dispatch('closeSnackbar')
+    }
   },
   created() {
     this.$store.dispatch("fetchInspections");

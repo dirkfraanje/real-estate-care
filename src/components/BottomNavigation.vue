@@ -1,7 +1,7 @@
 <template>
   <v-bottom-navigation dark class="primary">
     <v-btn @click="notify('No action defined yet for Active task')">
-      <span>Active task</span>
+      <span>Last </span>
       <v-icon>build</v-icon>
     </v-btn>
 
