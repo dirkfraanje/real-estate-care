@@ -1,6 +1,6 @@
 <template>
   <list-inspections
-    :inspections="this.$store.state.executed_inspections"
+    :inspections="this.$store.state.assigned_inspections"
     toolbarText="Assigned inspections"
   />
 </template>
