@@ -1,16 +1,6 @@
 <template>
   <v-app
-    ><v-container class="grey lighten-5">
-    Add app to home screen?
-
-    <v-btn @click="installPWA">
-      Install!
-    </v-btn>
-
-    <v-btn @click="dismissPrompt">
-      No, thanks
-    </v-btn>
-  </v-container><v-form>
+    ><v-form>
     <v-container fluid><v-row class="justify-center mt-1 mb-1">
       <RealEstateCareLogo /></v-row>
       <v-row class="justify-center" >
@@ -67,7 +57,7 @@
 import RealEstateCareLogo from '@/components/RealEstateCareLogo.vue'
 
 export default {
-  name: "App",
+  name: "LoginView",
   components: {
     RealEstateCareLogo,
   },
@@ -79,8 +69,7 @@ export default {
         showWarning: false,
         rules: {
           required: value => !!value || 'Required.'
-        },
-        shown: false,
+        }
   }),
   methods:{
     login(){
@@ -92,33 +81,7 @@ export default {
         this.$store.dispatch('authenticate');
         this.$router.push('/');
       }
-    },
-    dismissPrompt() {
-      this.shown = false
-    },installPWA() {
-        alert('Beforeprompt')
-      this.installEvent.prompt()
-      this.installEvent.userChoice.then((choice) => {
-        this.dismissPrompt() // Hide the prompt once the user's clicked
-        if (choice.outcome === 'accepted') {
-            alert('Accepted')
-          // Do something additional if the user chose to install
-        } else {
-          // Do something additional if the user declined
-        }
-      })
     }
-  },
-  beforeMount() {
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault()
-      this.installEvent = e
-      this.shown = true
-    })
-  },
-  mounted(){
-    alert('Test')
-//    this.installEvent.prompt()
   }
 };
 </script>
