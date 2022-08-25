@@ -72,7 +72,7 @@ export default new Vuex.Store({
     },
     actions: {
         authenticate(context) {
-            //For prototype only 
+            //For prototype only
             context.commit('SET_AUTHENTICATION')
         },
         //Fetch executed inspections

@@ -94,6 +94,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  router.app.$store.dispatch('authenticate')
   if (to.name !== 'login' && !store.state.isAuthenticated)
     next({ name: 'login' })
   else next()
