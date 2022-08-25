@@ -1,8 +1,5 @@
 export default {
   methods: {
-    noActionDefinedMessage(message) {
-      alert('No action yet defined for ' + message)
-    },
     photoSelected(event) {
       if (!event) return;
       const reader = new FileReader();

@@ -47,14 +47,6 @@ export default {
       localStorage.setItem("username", "demo");
       localStorage.setItem("password", "password");
     }
-  },
-  methods: {
-    showSnackbarSucces() {
-      this.$store.dispatch("showSnackbarSucces");
-    },
-    showSnackbarFailed() {
-      this.$store.dispatch("showSnackbarFailed");
-    },
-  },
+  }
 };
 </script>

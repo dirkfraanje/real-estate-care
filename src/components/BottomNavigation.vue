@@ -1,12 +1,12 @@
 <template>
   <v-bottom-navigation dark class="primary">
 
-    <v-btn @click="noActionDefinedMessage('Active task')">
+    <v-btn @click="alert('Active task')">
       <span>Active task</span>
       <v-icon>build</v-icon>
     </v-btn>
 
-    <v-btn @click="noActionDefinedMessage('Search')">
+    <v-btn @click="alert('Search')">
       <span>Search knowledge base</span>
       <v-icon>manage_search</v-icon>
     </v-btn>

@@ -31,6 +31,14 @@ export default new Vuex.Store({
         HIDE_SNACKBAR(state) {
             state.showMainSnackbar = false;
         },
+        SET_ALL_INSPECTIONS(state, payload) {
+            localStorage.setItem('offline_all_inspections', JSON.stringify(payload))
+            state.all_inspections = payload;
+        },
+        SET_ALL_INSPECTIONS_OFFLINE(state) {
+            if (localStorage.offline_all_inspections !== undefined)
+                state.all_inspections = JSON.parse(localStorage.offline_all_inspections)
+        },
         SET_EXECUTED_INSPECTIONS(state, payload) {
             state.executed_inspections = payload;
             state.executed_count = state.executed_inspections.length;
@@ -41,10 +49,11 @@ export default new Vuex.Store({
         },
         SET_NOTIFICATIONS(state, payload) {
             localStorage.setItem('offline_notifications', JSON.stringify(payload));
-            state.notifications = JSON.parse(localStorage.offline_notifications);
+            state.notifications = payload;
         },
-        SET_OFFLINE_NOTIFICATIONS(state){
-            state.notifications = JSON.parse(localStorage.offline_notifications);
+        SET_OFFLINE_NOTIFICATIONS(state) {
+            if (localStorage.offline_notifications !== undefined)
+                state.notifications = JSON.parse(localStorage.offline_notifications);
         },
         SET_AUTHENTICATION(state) {
             //For this prototype we just check for demo/password
@@ -63,7 +72,7 @@ export default new Vuex.Store({
                 .then(res => {
                     if (!res.ok) {
                         res.json().then((data) => {
-                            this.dispatch('showSnackbarFailed', data)
+                            this.dispatch('showSnackbarFailed', [data, 2000])
                         })
                     }
                     else {
@@ -71,34 +80,14 @@ export default new Vuex.Store({
                         this.dispatch('setExecutedAndAssigned')
                     }
                 })
-                .catch((err) => this.dispatch('showSnackbarFailed', err.message))
+                //When offline, CRUD operations are not available
+                .catch(() => this.dispatch('showSnackbarFailed', ['When you are offline, you can only view data', 3000]))
         }
     },
     actions: {
         authenticate(context) {
             //For prototype only
             context.commit('SET_AUTHENTICATION')
-        },
-        //Fetch executed inspections
-        fetchInspections(context) {
-            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/inspections")
-                .then((res) => res.json())
-                .then((data) => {
-                    this.state.all_inspections = data.map(
-                        inspection => new Inspection(inspection)
-                    ).sort(
-                        (inspection1, inspection2) => inspection1.inspection.deadlineDate() - inspection2.inspection.deadlineDate()
-                    );
-                    context.dispatch('setExecutedAndAssigned')
-                })
-                .catch((err) => alert(err.message));
-
-        },
-        setExecutedAndAssigned(context) {
-            let assignedInspections = this.state.all_inspections.filter(inspection => inspection.inspection.execution_date.length === 0)
-            let executedInspections = this.state.all_inspections.filter(inspection => inspection.inspection.execution_date.length > 0)
-            context.commit('SET_EXECUTED_INSPECTIONS', executedInspections)
-            context.commit('SET_ASSIGNED_INSPECTIONS', assignedInspections)
         },
         fetchNotifications(context) {
             //Fetch notifications for inspector
@@ -109,9 +98,36 @@ export default new Vuex.Store({
                         notification => new Notification(notification)
                     ))
                 })
+                //If the notifications cannot be fetched we set them from the localstorage
                 .catch(() => context.commit('SET_OFFLINE_NOTIFICATIONS'));
-                
+
         },
+        //Fetch executed inspections
+        fetchInspections(context) {
+            fetch("https://62f2244025d9e8a2e7d7b732.mockapi.io/inspections")
+                .then((res) => res.json())
+                .then((data) => {
+                    context.commit('SET_ALL_INSPECTIONS', data.map(
+                        inspection => new Inspection(inspection)
+                    ).sort(
+                        (inspection1, inspection2) => inspection1.inspection.deadlineDate() - inspection2.inspection.deadlineDate()
+                    ));
+                    context.dispatch('setExecutedAndAssigned')
+                })
+                //If the inspections cannot be fetched we set them from the localstorage
+                .catch(() => {
+                    context.commit('SET_ALL_INSPECTIONS_OFFLINE')
+                    context.dispatch('setExecutedAndAssigned')
+                });
+
+        },
+        setExecutedAndAssigned(context) {
+            let assignedInspections = this.state.all_inspections.filter(inspection => inspection.inspection.execution_date.length === 0)
+            let executedInspections = this.state.all_inspections.filter(inspection => inspection.inspection.execution_date.length > 0)
+            context.commit('SET_EXECUTED_INSPECTIONS', executedInspections)
+            context.commit('SET_ASSIGNED_INSPECTIONS', assignedInspections)
+        },
+
         dismissNotification(context, notification) {
             //Reload notifications
             this.state.notifications.splice(this.state.notifications.indexOf(notification), 1)
@@ -152,7 +168,6 @@ export default new Vuex.Store({
             if (data[8] !== null)
                 localStorage.setItem(`damagephoto-${inspectionId}-${damage.id}`, data[8])
             context.commit('UPDATE_INSPECTION', inspection);
-            return true;
         },
         changeMaintenanceDetails(context, data) {
             let inspectionId = data[0];
@@ -173,7 +188,6 @@ export default new Vuex.Store({
             if (data[7] !== null)
                 localStorage.setItem(`maintenancephoto-${inspectionId}-${maintenance.id}`, data[7])
             context.commit('UPDATE_INSPECTION', inspection);
-            return true;
         },
         changeInstallationDetails(context, data) {
             let inspectionId = data[0];
@@ -195,7 +209,6 @@ export default new Vuex.Store({
             if (data[8] !== null)
                 localStorage.setItem(`installationphoto-${inspectionId}-${installation.id}`, data[8])
             context.commit('UPDATE_INSPECTION', inspection);
-            return true;
         },
         changeModificationDetails(context, data) {
             let inspectionId = data[0];
@@ -216,7 +229,6 @@ export default new Vuex.Store({
             if (data[7] !== null)
                 localStorage.setItem(`modificationphoto-${inspectionId}-${modification.id}`, data[7])
             context.commit('UPDATE_INSPECTION', inspection);
-            return true;
         },
         //Delete actions
         deleteDamage(context, data) {
@@ -263,11 +275,11 @@ export default new Vuex.Store({
                 context.commit('HIDE_SNACKBAR')
             }, 2000);
         },
-        showSnackbarFailed(context, data = 'Failed') {
-            context.commit('SHOW_SNACKBAR', [data, 'orange accent-4']);
+        showSnackbarFailed(context, data = ['Failed', 2000]) {
+            context.commit('SHOW_SNACKBAR', [data[0], 'orange accent-4']);
             setTimeout(() => {
                 context.commit('HIDE_SNACKBAR')
-            }, 2000);
+            }, data[1]);
         }
     }
 })
