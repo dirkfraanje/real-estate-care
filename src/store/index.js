@@ -81,7 +81,7 @@ export default new Vuex.Store({
                     }
                 })
                 //In the prototype, when offline, CRUD operations are not available
-                .catch(() => this.dispatch('showSnackbarFailed', ['When you are offline, you can only view data', 6000]))
+                .catch(() => this.dispatch('showSnackbarFailed', ['In the prototype, when you are offline, you can only view data', 6000]))
         }
     },
     actions: {

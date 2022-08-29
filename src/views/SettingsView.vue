@@ -111,7 +111,7 @@ export default {
     },
     showWarning() {
       this.$store.dispatch("showSnackbarFailed", [
-        "Functionality for this setting is not available in this prototype",
+        "Functionality for this setting is not available in the prototype",
         4000,
       ]);
     },

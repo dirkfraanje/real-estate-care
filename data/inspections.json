@@ -1,0 +1,365 @@
+[
+  {
+    "id": "5",
+    "inspection": {
+      "icon": "home",
+      "deadline_date": "2022-06-02",
+      "execution_date": "2022-05-24",
+      "location": {
+        "street": "Korenbloemstraat",
+        "number": 2,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3772GK"
+      }
+    },
+    "damages": [],
+    "deferred_maintenance": [],
+    "technical_installations": [],
+    "modifications": [
+      {
+		  "id": "1",
+        "location": "Whole house",
+        "performed_by": "tenant",
+        "description": "Security installed",
+        "action_to_take": "Have it inspected",
+        "remarks": "The current code is 1213, this should be changed by the new tenant",
+        "inspectionId": "5",
+		"new": true
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "inspection": {
+      "icon": "home",
+      "deadline_date": "2022-05-25",
+      "execution_date": "2022-05-27",
+      "location": {
+        "street": "Violenstraat",
+        "number": 11,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3772GL"
+      }
+    },
+    "damages": [],
+    "deferred_maintenance": [
+      {
+		"id": "1",
+        "location": "Scullery",
+        "type_of_maintenance": "Plumbing",
+        "acute_action_required": true,
+        "cost_indication": "0-500",
+        "description": "Boiler check",
+        "inspectionId": "2"
+      }
+    ],
+    "technical_installations": [
+      {
+		  "id": "1",
+        "location": "Whole house",
+        "installation_type": "Security",
+        "reported_malfunctions": "Not able to set alarm with security code",
+        "test_procedure": "https://livewell.honeywellhome.com/honeywell_wp/wp-content/uploads/Keypad_Alarm_Kit_User_Guide.pdf",
+        "approved": false,
+        "remarks": "Alarm needs to be approved",
+        "inspectionId": "2"
+      }
+    ],
+    "modifications": []
+  },
+  {
+    "id": "3",
+    "inspection": {
+      "icon": "apartment",
+      "deadline_date": "2022-07-21",
+      "execution_date": "2022-07-18",
+      "location": {
+        "street": "Oldenbarnevelderweg",
+        "number": 27,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3771ZP"
+      }
+    },
+    "damages": [
+      {
+        "id": "1",
+        "location": "Outside",
+        "new_damage": true,
+        "type_of_damage": "Normal usage",
+        "date": "2022-08-02",
+        "acute_action_required": true,
+        "description": "Wall of the garage is torn at the top due to places of hanging roof",
+        
+        "inspectionId": "3"
+      }
+    ],
+    "deferred_maintenance": [
+      {
+		  "id": "1",
+        "location": "Outside",
+        "type_of_maintenance": "Painting",
+        "acute_action_required": true,
+        "cost_indication": "500-1500",
+        "description": "All painting is seriously behind",
+        
+        "inspectionId": "3"
+      },
+      {
+		  "id": "2",
+        "location": "Outside",
+        "type_of_maintenance": "Wood rot",
+        "acute_action_required": true,
+        "cost_indication": "1500+",
+        "description": "Windows below / behind are rotten and need to be replaced",
+        
+        "inspectionId": "3"
+      }
+    ],
+    "technical_installations": [],
+    "modifications": []
+  },
+  {
+    "id": "4",
+    "inspection": {
+      "icon": "home",
+      "deadline_date": "2022-08-03",
+      "execution_date": "2022-08-01",
+      "location": {
+        "street": "Violenstraat",
+        "number": 1,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3772GL"
+      }
+    },
+    "damages": [
+      {
+        "id": "1",
+        "location": "Outside",
+        "new_damage": true,
+        "type_of_damage": "Wear",
+        "date": "2022-04-08",
+        "acute_action_required": false,
+        "description": "Keyhole backdoor is worn",
+        "inspectionId": "4"
+      }
+    ],
+    "deferred_maintenance": [],
+    "technical_installations": [
+      {
+		  "id": "1",
+        "location": "Upstairs",
+        "installation_type": "Heating",
+        "reported_malfunctions": "Heating cannot be set ",
+        "test_procedure": "",
+        "approved": true,
+        "remarks": "It's currently set to 21 degrees but it cannot be decreased or increased",
+        "inspectionId": "4"
+      }
+    ],
+    "modifications": []
+  },
+  {
+    "id": "1",
+    "inspection": {
+      "icon": "home",
+      "deadline_date": "2022-05-22",
+      "execution_date": "2022-05-24",
+      "location": {
+        "street": "Anjelierstraat",
+        "number": "38",
+        "number_addition": "A",
+        "city": "Barneveld",
+        "zip_code": "3772XN"
+      }
+    },
+    "damages": [
+      {
+        "id": "1",
+        "location": "Kitchen",
+        "new_damage": true,
+        "type_of_damage": "Violence",
+        "date": "2021-03-22",
+        "acute_action_required": false,
+        "description": "Kitchen door handle is broken",
+        "inspectionId": "1"
+      },
+      {
+        "id": "2",
+        "location": "Living room",
+        "new_damage": true,
+        "type_of_damage": "Violence",
+        "date": "2021-03-11",
+        "acute_action_required": false,
+        "description": "Drawer handle has completely disappeared",
+        "inspectionId": "1"
+      }
+    ],
+    "deferred_maintenance": [],
+    "technical_installations": [],
+    "modifications": [
+      {
+		"id": "1",
+        "location": "Roof",
+        "performed_by": "contractor",
+        "description": "Solar panels + inverter installed",
+        "action_to_take": "Accept",
+        "remarks": "Inform new residents that the inverter is an old model.",
+        "inspectionId": "1",
+		"new": false
+      },{
+		"id": "2",
+        "location": "Roof / upper floor",
+        "performed_by": "contractor",
+        "description": "Air conditioning upstairs",
+        "action_to_take": "Have it adjusted and approved",
+        "remarks": "",
+        "inspectionId": "1",
+		"new": true
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "inspection": {
+      "icon": "home",
+      "client_id": "cl_1",
+      "deadline_date": "2022-08-10",
+      "execution_date": "",
+      "location": {
+        "street": "Koterweg",
+        "number": 68,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3772BD"
+      }
+    },
+    "damages": [],
+    "deferred_maintenance": [],
+    "technical_installations": [],
+    "modifications": []
+  },
+  {
+    "id": "7",
+    "inspection": {
+      "icon": "apartment",
+      "client_id": "cl_1",
+      "deadline_date": "2022-08-09",
+      "execution_date": "",
+      "location": {
+        "street": "Lobeliastraat",
+        "number": 41,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3772JR"
+      }
+    },
+    "damages": [],
+    "deferred_maintenance": [],
+    "technical_installations": [],
+    "modifications": []
+  },
+  {
+    "id": "8",
+    "inspection": {
+      "icon": "apartment",
+      "client_id": "cl_2",
+      "deadline_date": "2022-08-13",
+      "execution_date": "",
+      "location": {
+        "street": "Lobeliastraat",
+        "number": 55,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3772JR"
+      }
+    },
+    "damages": [],
+    "deferred_maintenance": [],
+    "technical_installations": [],
+    "modifications": []
+  },
+  {
+    "id": "9",
+    "inspection": {
+      "icon": "apartment",
+      "client_id": "cl_1",
+      "deadline_date": "2022-08-15",
+      "execution_date": "",
+      "location": {
+        "street": "Lobeliastraat",
+        "number": 58,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3772JV"
+      }
+    },
+    "damages": [],
+    "deferred_maintenance": [],
+    "technical_installations": [],
+    "modifications": []
+  },
+  {
+    "id": "10",
+    "inspection": {
+      "icon": "apartment",
+      "client_id": "cl_1",
+      "deadline_date": "2022-08-22",
+      "execution_date": "",
+      "location": {
+        "street": "Lobeliastraat",
+        "number": 72,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3772JV"
+      }
+    },
+    "damages": [],
+    "deferred_maintenance": [],
+    "technical_installations": [],
+    "modifications": []
+  },
+  {
+    "id": "11",
+    "inspection": {
+      "icon": "apartment",
+      "client_id": "cl_1",
+      "deadline_date": "2022-08-25",
+      "execution_date": "",
+      "location": {
+        "street": "Raperbeek",
+        "number": 24,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3772RD"
+      }
+    },
+    "damages": [],
+    "deferred_maintenance": [],
+    "technical_installations": [],
+    "modifications": []
+  },
+  {
+    "id": "12",
+    "inspection": {
+      "icon": "apartment",
+      "client_id": "cl_1",
+      "deadline_date": "2022-08-26",
+      "execution_date": "",
+      "location": {
+        "street": "Raperbeek",
+        "number": 26,
+        "number_addition": "",
+        "city": "Barneveld",
+        "zip_code": "3772RD"
+      }
+    },
+    "damages": [],
+    "deferred_maintenance": [],
+    "technical_installations": [],
+    "modifications": []
+  }
+]
