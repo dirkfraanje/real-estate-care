@@ -7,6 +7,7 @@
         v-model="select"
         :loading="loading"
         :search-input.sync="search"
+        append-icon=""
         class="mx-2 mt-2"
         flat
         hide-no-data
