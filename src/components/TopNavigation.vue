@@ -75,18 +75,7 @@ export default {
   methods: {
     dismissNotification(notification) {
       if (!(localStorage.getItem(notificationLocalWarningShown) === "true")) {
-        this.$store.dispatch('showSnackbarFailed',["For this prototype the notification will not be permenantly removed. It will be shown again after the app is restarted.", 0]);
-        // (context, data = 'Failed') {
-        //     context.commit('SHOW_SNACKBAR', [data, 'orange accent-4']);
-        //     setTimeout(() => {
-        //         context.commit('HIDE_SNACKBAR')
-        //     }, 2000);
-        // }
-        // this.$alert(
-        //   "For this prototype the notification will not be permenantly removed. It will be shown again after the app is restarted.",
-        //   "Warning",
-        //   "warning"
-        // );
+        this.$store.dispatch('showSnackbarFailed',["For this prototype the notification will not be permenantly removed. It will be shown again after the app is restarted.", 8000]);
         localStorage.setItem(notificationLocalWarningShown, true);
       }
       this.$store.dispatch("dismissNotification", notification);

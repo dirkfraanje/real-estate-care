@@ -24,10 +24,8 @@
             <v-btn icon x-large @click="changeAvatar">
               <v-avatar color="teal" size="46">
                 <span class="text-h6">D</span>
-              </v-avatar> </v-btn
-            ><v-alert v-show="showAvatarAlert" dense outlined type="warning"
-              >Changing the avatar is not possible in the prototype
-            </v-alert>
+              </v-avatar>
+            </v-btn>
           </div>
         </v-list-item-content>
       </v-list-item>
@@ -51,7 +49,7 @@
       <v-subheader>Notifications</v-subheader>
 
       <v-list-item-group v-model="settings" multiple>
-        <v-list-item @click="dialog = !dialog">
+        <v-list-item @click="showWarning">
           <template v-slot:default="{ active }">
             <v-list-item-action>
               <v-checkbox :input-value="active" color="primary"></v-checkbox>
@@ -64,7 +62,7 @@
           </template>
         </v-list-item>
 
-        <v-list-item @click="dialog = !dialog">
+        <v-list-item @click="showWarning">
           <template v-slot:default="{ active }">
             <v-list-item-action>
               <v-checkbox :input-value="active" color="primary"></v-checkbox>
@@ -81,20 +79,6 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-    <v-dialog v-model="dialog" max-width="400px">
-      <v-card>
-        <v-card-title>
-          <span
-            >Functionality for this setting is not available in this
-            prototype</span
-          >
-          <v-spacer></v-spacer>
-        </v-card-title>
-        <v-card-actions>
-          <v-btn color="primary" text @click="dialog = false"> Close </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-card>
 </template>
 <script>
@@ -112,7 +96,6 @@ export default {
       showPassword: false,
       userName: localStorage.getItem("username"),
       password: localStorage.getItem("password"),
-      dialog: false,
     };
   },
   methods: {
@@ -121,7 +104,16 @@ export default {
       localStorage.setItem("dark_mode", this.$vuetify.theme.dark);
     },
     changeAvatar() {
-      this.showAvatarAlert = !this.showAvatarAlert;
+      this.$store.dispatch("showSnackbarFailed", [
+        "Changing the avatar is not possible in the prototype",
+        5000,
+      ]);
+    },
+    showWarning() {
+      this.$store.dispatch("showSnackbarFailed", [
+        "Functionality for this setting is not available in this prototype",
+        4000,
+      ]);
     },
   },
   computed: {
