@@ -3,7 +3,7 @@
     <v-list two-line>
       <v-list-item>
         <v-list-item-icon>
-          <v-icon color="teal">location_on</v-icon>
+          <v-icon color="primary">location_on</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>
@@ -27,7 +27,7 @@
         ><v-dialog v-model="inspectionDialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }"
             ><v-btn icon v-bind="attrs" v-on="on">
-              <v-icon color="teal lighten-1">edit</v-icon>
+              <v-icon color="secondary">edit</v-icon>
             </v-btn></template
           >
           <v-card>
@@ -122,7 +122,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-                color="blue darken-1"
+                color="secondary"
                 text
                 @click="inspectionDialog = false"
               >
@@ -130,7 +130,7 @@
               </v-btn>
               <v-btn
                 :disabled="!inspectionValid"
-                color="blue darken-1"
+                color="secondary"
                 text
                 @click="saveInspection"
               >

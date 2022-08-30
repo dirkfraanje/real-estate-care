@@ -46,7 +46,7 @@
                   @click="dismissNotification(notification)"
                   v-bind="attrs"
                   v-on="on"
-                  color="teal"
+                  color="primary"
                   >highlight_off</v-icon
                 >
               </template>

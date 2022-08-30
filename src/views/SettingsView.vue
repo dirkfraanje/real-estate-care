@@ -22,7 +22,7 @@
           <v-list-item-subtitle>Change your avatar</v-list-item-subtitle>
           <div>
             <v-btn icon x-large @click="changeAvatar">
-              <v-avatar color="teal" size="46">
+              <v-avatar color="primary" size="46">
                 <span class="text-h6">D</span>
               </v-avatar>
             </v-btn>

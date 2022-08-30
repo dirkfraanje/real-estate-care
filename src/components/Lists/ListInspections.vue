@@ -5,7 +5,7 @@
       <v-expansion-panel v-for="(inspection, i) in this.inspections" :key="i">
         <v-expansion-panel-header class="ml-4"
           ><div>
-            <v-icon color="teal lighten-1">{{
+            <v-icon color="secondary">{{
               inspection.inspection.icon
             }}</v-icon>
             {{ inspection.inspection.location.street }}

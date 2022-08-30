@@ -7,7 +7,7 @@
             <v-badge v-if="card.badgecontent !== ''"
         :content="card.badgecontent === 'executed_count' ? executed_count : assigned_count"
         class="mt-3"
-        color="teal"
+        color="primary"
         overlap
       ><v-icon size="100">{{ card.icon }}</v-icon>
                 </v-badge><v-icon v-if="card.badgecontent === ''" size="100">{{ card.icon }}</v-icon>

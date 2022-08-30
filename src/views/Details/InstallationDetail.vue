@@ -72,7 +72,7 @@
         <v-col cols="12" sm="6" md="4">
           <v-file-input
             hide-input
-            color="teal"
+            color="primary"
             prepend-icon="mdi-camera"
             accept="image/png, image/jpg, image/jpeg, image/bmp"
             @change="photoSelected"

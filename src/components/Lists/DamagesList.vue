@@ -3,18 +3,18 @@
     <v-list>
       <v-subheader
         >DAMAGES<v-spacer></v-spacer
-        ><v-btn icon @click="newDamage" ><v-icon color="teal">add</v-icon></v-btn></v-subheader
+        ><v-btn icon @click="newDamage" ><v-icon color="primary">add</v-icon></v-btn></v-subheader
       >
       <v-list-item v-for="(damage, i) in inspection.damages" :key="i"
         ><template>
           <v-list-item-icon>
-            <v-icon color="teal">broken_image</v-icon>
+            <v-icon color="primary">broken_image</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title v-text="damage.description"></v-list-item-title>
           </v-list-item-content>
           <v-btn icon :to="{ name: 'damagedetail', params: { damage: damage } }"
-            ><v-icon color="teal lighten-1">edit</v-icon></v-btn
+            ><v-icon color="secondary">edit</v-icon></v-btn
           >
         </template>
       </v-list-item>

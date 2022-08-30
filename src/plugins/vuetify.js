@@ -1,21 +1,20 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
-import colors from 'vuetify/lib/util/colors'
 Vue.use(Vuetify);
 
 export default new Vuetify({
     theme: {
       themes: {
         light: {
-          primary: colors.teal,
-          secondary: colors.teal.darken1,
-          accent: colors.teal.darken3
+          primary: '#00aaa2',
+          secondary: '#01847e',
+          accent: '#00706b'
         
         },
         dark: {
-          primary: colors.teal,
-          secondary: colors.teal.lighten2,
-          accent: colors.teal.lighten3
+          primary: '#008983',
+          secondary: '#029d96',
+          accent: '#01bdb4'
         },
       },
     },

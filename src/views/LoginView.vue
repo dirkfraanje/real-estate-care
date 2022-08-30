@@ -40,7 +40,7 @@
       </v-row>
       <v-row class="justify-center"> <v-btn
       dark 
-      color="teal"
+      color="primary"
       @click="login"
     >Login
     </v-btn><v-col class="mt-1 red darken-2 text-center" v-if="showWarning"

@@ -20,7 +20,7 @@ export default new Vuex.Store({
         notifications: [],
         showMainSnackbar: false,
         mainSnackbarText: '',
-        snackbarcolor: 'teal accent-4'
+        snackbarcolor: 'accent'
     },
     mutations: {
         SHOW_SNACKBAR(state, payload) {
@@ -270,7 +270,7 @@ export default new Vuex.Store({
         },
         //Snackbar actions
         showSnackbarSucces(context, data = 'Success') {
-            context.commit('SHOW_SNACKBAR', [data, 'teal accent-4']);
+            context.commit('SHOW_SNACKBAR', [data, 'accent']);
             setTimeout(() => {
                 context.commit('HIDE_SNACKBAR')
             }, 2000);
