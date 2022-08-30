@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar dense dark height="60">
+    <v-app-bar class="topbar" dark height="60">
       <div @click="$router.replace('/')">
         <v-img
           :src="require('../assets/logo_rec.svg')"
@@ -9,7 +9,7 @@
           width="40"
         />
       </div>
-      <v-toolbar-title @click="$router.replace('/')">
+      <v-toolbar-title @click="$router.replace('/')" >
         <div class="pa-2">
           <p class="mb-n2 mt-4 nav-font nav-title">Real Estate Care</p>
           <p class="nav-font nav-sub-title">Caring is in our nature</p>
@@ -85,6 +85,9 @@ export default {
 </script>
 
 <style scoped>
+.topbar{
+  background: linear-gradient(0.25turn, rgb(71,94,108), rgb(20,27,31)) !important; 
+}
 .nav-font {
   font-family: "Agency FB";
   color: #e1e3e3;
