@@ -232,17 +232,19 @@ export default new Vuex.Store({
         },
         //Delete actions
         deleteDamage(context, data) {
-            let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
-
+            let inspection = this.state.all_inspections.find(inspection => inspection.id === data[0])
+            console.log(inspection)
             let damage = inspection.damages.find(damage => damage.id === data[1]);
+            console.log(damage)
             if (damage === undefined)
                 return false;
+
             inspection.damages.splice(inspection.damages.indexOf(damage), 1)
             context.commit('UPDATE_INSPECTION', inspection)
             localStorage.removeItem(`damagephoto-${inspection.id}-${damage.id}`)
         },
         deleteMaintenance(context, data) {
-            let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
+            let inspection = this.state.all_inspections.find(inspection => inspection.id === data[0])
             let maintenance = inspection.deferred_maintenance.find(maintenance => maintenance.id === data[1]);
             if (maintenance === undefined)
                 return false;
@@ -251,7 +253,7 @@ export default new Vuex.Store({
             localStorage.removeItem(`maintenancephoto-${inspection.id}-${maintenance.id}`)
         },
         deleteTechnicalInstallation(context, data) {
-            let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
+            let inspection = this.state.all_inspections.find(inspection => inspection.id === data[0])
             let installation = inspection.technical_installations.find(installation => installation.id === data[1]);
             if (installation === undefined)
                 return false;
@@ -260,7 +262,7 @@ export default new Vuex.Store({
             localStorage.removeItem(`installationphoto-${inspection.id}-${installation.id}`)
         },
         deleteModification(context, data) {
-            let inspection = this.state.executed_inspections.find(inspection => inspection.id === data[0])
+            let inspection = this.state.all_inspections.find(inspection => inspection.id === data[0])
             let modification = inspection.modifications.find(modification => modification.id === data[1]);
             if (modification === undefined)
                 return false;
