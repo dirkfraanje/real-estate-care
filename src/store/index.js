@@ -56,7 +56,7 @@ export default new Vuex.Store({
                 state.notifications = JSON.parse(localStorage.offline_notifications);
         },
         SET_AUTHENTICATION(state) {
-            //For this prototype we just check for demo/password
+            //For this prototype we just check for demo/password, two factor is added later
             state.isAuthenticated =
                 localStorage.getItem('username') === 'demo' &&
                 localStorage.getItem('password') === 'password'

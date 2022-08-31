@@ -61,7 +61,7 @@
           <v-subheader>Problem</v-subheader>
           <v-list-item>
             <v-list-item-action>
-              <v-checkbox v-model="notifications"></v-checkbox>
+              <v-checkbox v-model="online"></v-checkbox>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Online</v-list-item-title>
@@ -70,7 +70,7 @@
           </v-list-item>
           <v-list-item>
             <v-list-item-action>
-              <v-checkbox v-model="sound"></v-checkbox>
+              <v-checkbox v-model="offline"></v-checkbox>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Offline</v-list-item-title>
@@ -80,7 +80,7 @@
           <v-list-item>
             <v-list-item-content>
                 
-              <v-textarea label="Describe your problem here" v-model="widgets"></v-textarea>
+              <v-textarea label="Describe your problem here" v-model="problem"></v-textarea>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -96,6 +96,9 @@ export default {
   mixins: [mixins],
   data() {
     return {
+      online: false,
+      offline: false,
+      problem: '',
       dialog: false
     }
   },

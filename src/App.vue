@@ -51,6 +51,7 @@ export default {
     if (!localStorage.getItem("username")) {
       localStorage.setItem("username", "demo");
       localStorage.setItem("password", "password");
+      localStorage.setItem("twoFactorCode", "2468");
     }
   }
 };
