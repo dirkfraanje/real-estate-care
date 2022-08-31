@@ -5,6 +5,6 @@ module.exports = defineConfig({
   ],
   pwa: {
     name: "Real Estate Care",
-    themeColor: "primary"
+    themeColor: "#00aaa2"
   }
 })
