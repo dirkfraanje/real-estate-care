@@ -80,7 +80,7 @@
           <v-list-item>
             <v-list-item-content>
                 
-              <v-textarea label="Describe your problem here" background-color="#edeeee" v-model="widgets"></v-textarea>
+              <v-textarea label="Describe your problem here" v-model="widgets"></v-textarea>
             </v-list-item-content>
           </v-list-item>
         </v-list>
