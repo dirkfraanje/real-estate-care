@@ -12,6 +12,7 @@ This mobile app is designed to support inspectors when they are visiting buildin
 5. Synchronization
 6. Security
 7. Justification (Based on Nielsen's 10 Usability Heuristics)
+8. WCAG 2.1 Guidlines
 
 # Project status
 
@@ -97,3 +98,8 @@ If an error is displayed in the snackbar, additional information is provided. If
 ## Help
 
 On the bottom navigation a user can easily fill in a short support form. This form is (as soon as the app is in production) send to the app provider so help can be offered.
+
+# WCAG 2.1 Guidelines
+
+The app almost completely follows the WCAG 2.1 guidelines. The site is tested (with the login temporary disabled) with siteimprove.com:
+![My Remote Image](https://real-estate-care.netlify.app/img/wcag_check_real-estate-care.png)
