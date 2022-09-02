@@ -1,3 +1,4 @@
+![My Remote Image](https://real-estate-care.netlify.app/img/realesatecarebanner.png)
 # Real Estate Care - Mobile web app
 
 This mobile app is designed to support inspectors when they are visiting buildings they have to inspect. With the app they can report damages, technical installations, deferred maintenance and modifications.
