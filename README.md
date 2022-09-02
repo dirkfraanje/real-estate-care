@@ -61,7 +61,7 @@ During development the prototype is not secure(d). You only need the login *demo
 
 ## Visibility of system status
 
-Feedback for the user is provided through the main Snackbar (in App.vue) and by using popup's. While executing API actions a progress circular is shown so the user knows the system is working on it
+Feedback for the user is provided through the main Snackbar (in App.vue) and by using popup's
 
 ## System and real world match
 
