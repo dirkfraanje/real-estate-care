@@ -28,7 +28,7 @@
             :inset="article.inset"
           ></v-divider>
 
-          <v-list-item v-else :key="article.title">
+          <v-list-item @click="showArticleDetails(article)" v-else :key="article.title">
             <v-list-item-avatar>
               <v-icon>{{ article.icon }}</v-icon>
             </v-list-item-avatar>
@@ -42,6 +42,35 @@
           </v-list-item>
         </template>
       </v-list>
+      <v-dialog
+      v-model="articleDialog"
+      width="500"
+    >
+
+
+      <v-card>
+        <v-card-title class="text-h5 grey lighten-2">
+          {{ article_title }}
+        </v-card-title>
+
+        <v-card-text>
+          {{ article_subtitle }}
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="articleDialog = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     </v-card>
   </div>
 </template>
@@ -53,6 +82,9 @@ export default {
   },
   data() {
     return {
+      articleDialog: false,
+      article_title: '',
+      article_subtitle: '',
       loading: false,
       items: [],
       search: null,
@@ -98,6 +130,11 @@ export default {
       }
   },
     methods: {
+      showArticleDetails(article){
+        this.article_title = article.title
+        this.article_subtitle = article.subtitle
+        this.articleDialog = true;
+      },
       querySelections (v) {
         this.loading = true
         setTimeout(() => {
