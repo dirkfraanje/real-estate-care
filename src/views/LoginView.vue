@@ -57,10 +57,9 @@
         >
       </template>
       <v-card>
-        <v-card-title>
-          <span class="text-h5"
-            >Enter two-factor code from your Authenticator</span
-          >
+        <v-card-title><small>
+          Enter two-factor code from your Authenticator
+          </small>
         </v-card-title>
         <v-card-text>
           <v-container>
