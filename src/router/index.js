@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
-import store from '../store/index.js'
+// import store from '../store/index.js'
 Vue.use(VueRouter)
 
 const routes = [
@@ -93,11 +93,11 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  router.app.$store.dispatch('authenticate')
-  if (to.name !== 'login' && !store.state.isAuthenticated)
-    next({ name: 'login' })
-  else next()
-})
+// router.beforeEach((to, from, next) => {
+//   router.app.$store.dispatch('authenticate')
+//   if (to.name !== 'login' && !store.state.isAuthenticated)
+//     next({ name: 'login' })
+//   else next()
+// })
 
 export default router
