@@ -58,7 +58,7 @@
       </template>
       <v-card>
         <v-card-title><small>
-          Enter two-factor code from your Authenticator
+          Enter two-factor code
           </small>
         </v-card-title>
         <v-card-text>
