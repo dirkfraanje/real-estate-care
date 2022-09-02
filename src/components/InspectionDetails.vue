@@ -54,9 +54,10 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
+                      type="number"
                       v-model="number"
                       label="Number*"
-                      :rules="rules.text"
+                      :rules="rules.number"
                       required
                     ></v-text-field>
                   </v-col>
@@ -165,6 +166,7 @@ export default {
       execution_date: this.inspection.inspection.execution_date,
       rules: {
         text: [(val) => (val || "").length > 0 || "This field is required"],
+        number: [(val) => val > 0 || "This field is required"]
       },
     };
   },
@@ -194,7 +196,7 @@ export default {
   },
   computed: {
     inspectionValid() {
-      return this.street && this.number && this.zip_code && this.city;
+      return this.street && this.number && this.number > 0 && this.zip_code && this.city;
     },
   },
 };
